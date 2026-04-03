@@ -494,17 +494,17 @@ export default function App() {
   };
 
   const resetGame = () => {
-    setState({
+    setState(prev => ({
       playerPosition: 0,
       isGameOver: false,
       history: [{ text: 'Уен яңадан башланды!', type: 'info', icon: <RotateCcw className="w-3 h-3" />, time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) } as any],
       currentEvent: null,
       isRolling: false,
       diceValue: 1,
-      goldenCards: 0,
+      goldenCards: prev.goldenCards,
       isAnswering: false,
       isSecondQuestion: false,
-    });
+    }));
     setShowModal(false);
   };
 
