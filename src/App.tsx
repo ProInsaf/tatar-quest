@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'motion/react';
-import { Dices, RotateCcw, Trophy, AlertTriangle, HelpCircle, Gift, Shield, ChevronRight, Sparkles, Coins, CreditCard, History, User, BookOpen, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
+import { RotateCcw, Trophy, AlertTriangle, HelpCircle, Gift, Shield, ChevronRight, Sparkles, CreditCard, History, User, BookOpen, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
 import { generateBoard, BOARD_SIZE, TUQAY_HEROES, BACKUP_QUESTIONS } from './constants';
 import { Cell, GameState } from './types';
 
@@ -105,16 +105,215 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
   );
 };
 
+const TATAR_ROLL_LABEL = (n: number) => {
+  return `${n} клетка алга`;
+};
+
+const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
+  const [launched, setLaunched] = useState(false);
+
+  const handleStart = () => {
+    setLaunched(true);
+    setTimeout(onStart, 900);
+  };
+
+  const particles = Array.from({ length: 60 });
+
+  return (
+    <motion.div
+      initial={{ opacity: 1 }}
+      animate={{ opacity: launched ? 0 : 1 }}
+      transition={{ duration: 0.7, ease: 'easeInOut' }}
+      className="fixed inset-0 z-[200] flex flex-col items-center justify-center overflow-hidden"
+      style={{
+        background: 'radial-gradient(ellipse at 60% 40%, #064e3b 0%, #022c22 55%, #000 100%)'
+      }}
+    >
+      {/* Animated floating ornaments */}
+      {particles.map((_, i) => (
+        <motion.div
+          key={i}
+          initial={{
+            x: `${(Math.random() - 0.5) * 200}vw`,
+            y: `${(Math.random() - 0.5) * 200}vh`,
+            opacity: 0,
+            scale: Math.random() * 0.6 + 0.2,
+          }}
+          animate={{
+            x: [`${(Math.random() - 0.5) * 60}vw`, `${(Math.random() - 0.5) * 60}vw`],
+            y: [`${(Math.random() - 0.5) * 60}vh`, `${(Math.random() - 0.5) * 60}vh`],
+            opacity: [0, Math.random() * 0.15 + 0.04, 0],
+            rotate: 360,
+          }}
+          transition={{
+            duration: Math.random() * 12 + 8,
+            repeat: Infinity,
+            ease: 'easeInOut',
+            delay: Math.random() * 5,
+          }}
+          className="absolute text-emerald-400 pointer-events-none"
+          style={{ left: '50%', top: '50%' }}
+        >
+          <TatarOrnament className={`w-${Math.floor(Math.random() * 8 + 4)} h-${Math.floor(Math.random() * 8 + 4)}`} variant={i % 2 === 0 ? 1 : 2} />
+        </motion.div>
+      ))}
+
+      {/* Glow rings */}
+      <motion.div
+        animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08] }}
+        transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+        className="absolute w-[600px] h-[600px] rounded-full border-2 border-emerald-400"
+      />
+      <motion.div
+        animate={{ scale: [1.1, 1, 1.1], opacity: [0.04, 0.12, 0.04] }}
+        transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+        className="absolute w-[800px] h-[800px] rounded-full border border-yellow-400"
+      />
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center text-center px-6">
+        {/* Tukay portrait */}
+        <motion.div
+          initial={{ y: -40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.2, type: 'spring', damping: 14 }}
+          className="mb-6 relative"
+        >
+          <div className="absolute -inset-3 bg-yellow-400/20 rounded-full blur-2xl animate-pulse" />
+          <div className="w-28 h-28 rounded-full border-4 border-yellow-400 overflow-hidden shadow-[0_0_40px_rgba(250,204,21,0.5)] relative">
+            <img
+              src="https://avatars.mds.yandex.net/i?id=84c7c28b2d73e2684e67d3867411fe209c0d8277-8310551-images-thumbs&n=13"
+              alt="Габдулла Тукай"
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
+            className="absolute -inset-4 rounded-full border-2 border-dashed border-emerald-500/30"
+          />
+        </motion.div>
+
+        {/* Title */}
+        <motion.div
+          initial={{ y: 30, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.4, type: 'spring', damping: 12 }}
+        >
+          <h1
+            className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-none mb-1"
+            style={{
+              background: 'linear-gradient(135deg, #fde68a 0%, #f59e0b 40%, #ffffff 60%, #6ee7b7 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text',
+              filter: 'drop-shadow(0 0 30px rgba(250,204,21,0.4))'
+            }}
+          >
+            TUQAY
+          </h1>
+          <h2
+            className="text-3xl md:text-5xl font-black uppercase tracking-[0.3em] text-emerald-300"
+            style={{ letterSpacing: '0.35em' }}
+          >
+            QUEST
+          </h2>
+        </motion.div>
+
+        {/* Subtitle */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.7 }}
+          className="mt-4 text-emerald-400 font-mono text-sm uppercase tracking-widest"
+        >
+          Тукай дөньясы буйлап • 40 клеток
+        </motion.p>
+
+        {/* Start button */}
+        <motion.div
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.9, type: 'spring', damping: 10 }}
+          className="mt-12 relative"
+        >
+          {/* Pulsing glow behind button */}
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.5, 0, 0.5] }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className="absolute inset-0 bg-yellow-400 rounded-none blur-2xl"
+          />
+
+          {/* Launch burst rings */}
+          <AnimatePresence>
+            {launched && [0, 1, 2].map(i => (
+              <motion.div
+                key={i}
+                initial={{ scale: 0.5, opacity: 1 }}
+                animate={{ scale: 3 + i * 1.5, opacity: 0 }}
+                transition={{ duration: 0.7, delay: i * 0.1, ease: 'easeOut' }}
+                className="absolute inset-0 border-4 border-yellow-400 rounded-full"
+              />
+            ))}
+          </AnimatePresence>
+
+          <motion.button
+            whileHover={{ scale: 1.06 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleStart}
+            disabled={launched}
+            className="relative px-20 py-6 font-black uppercase tracking-[0.25em] text-2xl md:text-3xl text-emerald-950 border-4 border-yellow-300 overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #fde68a, #f59e0b)',
+              boxShadow: '8px 8px 0 rgba(0,0,0,0.5), 0 0 40px rgba(250,204,21,0.3)'
+            }}
+          >
+            <motion.div
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut', repeatDelay: 1 }}
+              className="absolute inset-0 bg-white/30 skew-x-12"
+            />
+            <span className="relative z-10 flex items-center gap-3">
+              <Sparkles className="w-7 h-7" />
+              Башларга!
+            </span>
+          </motion.button>
+        </motion.div>
+
+        {/* Bottom decoration */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="mt-10 flex items-center gap-4 text-emerald-600/40"
+        >
+          <TatarOrnament className="w-6 h-6" />
+          <span className="font-mono text-xs tracking-widest uppercase">Г. Тукай • 1886 – 1913</span>
+          <TatarOrnament className="w-6 h-6" />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
 export default function App() {
+  const [showWelcome, setShowWelcome] = useState(true);
+
   const [state, setState] = useState<GameState>({
     playerPosition: 0,
     isGameOver: false,
-    history: ['Уен башланды!'],
+    history: [{
+      text: 'Уен башланды!',
+      type: 'info' as const,
+      icon: <BookOpen className="w-4 h-4" />,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+      id: 'init'
+    }] as any[],
     currentEvent: null,
     isRolling: false,
     diceValue: 1,
     goldenCards: 0,
-    currency: 0,
     isAnswering: false,
     isSecondQuestion: false,
   });
@@ -123,6 +322,22 @@ export default function App() {
   const [backupQuestion, setBackupQuestion] = useState<any>(null);
   const [selectedAnswerIdx, setSelectedAnswerIdx] = useState<number | null>(null);
   const [isAnswerChecked, setIsAnswerChecked] = useState(false);
+  const [showCheat, setShowCheat] = useState(false);
+  const cheatKeys = useRef(new Set<string>());
+
+  // F+J cheat combo
+  useEffect(() => {
+    const onDown = (e: KeyboardEvent) => {
+      cheatKeys.current.add(e.key.toLowerCase());
+      if (cheatKeys.current.has('f') && cheatKeys.current.has('j')) {
+        setShowCheat(prev => !prev);
+      }
+    };
+    const onUp = (e: KeyboardEvent) => cheatKeys.current.delete(e.key.toLowerCase());
+    window.addEventListener('keydown', onDown);
+    window.addEventListener('keyup', onUp);
+    return () => { window.removeEventListener('keydown', onDown); window.removeEventListener('keyup', onUp); };
+  }, []);
 
   const addToHistory = (msg: string, type: 'info' | 'success' | 'warning' | 'error' = 'info') => {
     const icons = {
@@ -146,38 +361,48 @@ export default function App() {
 
   const handleCellAction = useCallback((cell: Cell) => {
     let newPos = state.playerPosition;
-    let message = `Сез ${cell.id} клеткага эләктегез: ${cell.title}`;
     let type: 'info' | 'success' | 'warning' | 'error' = 'info';
 
     if (cell.type === 'hero') {
       const heroData = TUQAY_HEROES.find(h => h.title === cell.title);
       if (heroData) {
         newPos = Math.max(0, state.playerPosition + heroData.move);
-        message = `${cell.title}: ${heroData.description}`;
         type = 'error';
-        
+
         if (cell.title === 'Шүрәле') {
           setState(prev => ({ ...prev, goldenCards: Math.max(0, prev.goldenCards - 1) }));
         }
+
+        if (newPos === BOARD_SIZE - 1) {
+          setState(prev => ({
+            ...prev,
+            playerPosition: newPos,
+            isGameOver: true,
+            goldenCards: prev.goldenCards + 1
+          }));
+          addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success');
+        } else {
+          setState(prev => ({ ...prev, playerPosition: newPos }));
+          const steps = Math.abs(heroData.move);
+          const direction = heroData.move < 0 ? '\u0430\u0440\u0442\u043a\u0430' : '\u0430\u043b\u0433\u0430';
+          addToHistory(`${steps} \u043a\u043b\u0435\u0442\u043a\u0430\u0433\u0430 ${direction}`, type);
+        }
+        return;
       }
     }
 
+    // non-hero cells
     if (newPos === BOARD_SIZE - 1) {
-      setState(prev => ({ 
-        ...prev, 
-        playerPosition: newPos, 
+      setState(prev => ({
+        ...prev,
+        playerPosition: newPos,
         isGameOver: true,
-        goldenCards: prev.goldenCards + 1,
-        currency: prev.currency + 500
+        goldenCards: prev.goldenCards + 1
       }));
       addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success');
     } else {
       setState(prev => ({ ...prev, playerPosition: newPos }));
-      if (newPos !== state.playerPosition) {
-        addToHistory(`Клетка эффекты: ${newPos}-нче клеткага күчү`, type);
-      }
     }
-    addToHistory(message, type);
   }, [state.playerPosition]);
 
   const handleAnswer = (index: number) => {
@@ -195,21 +420,39 @@ export default function App() {
         setState(prev => ({ ...prev, isAnswering: false, isSecondQuestion: false }));
         setShowModal(false);
       } else {
-        if (!state.isSecondQuestion) {
+        if (state.goldenCards > 0) {
+          // Алтын карта бар — бер карта алына, өстәмә сорау бирелми
+          addToHistory(`1 Тукай картасы алынды`, 'warning');
+          setState(prev => ({
+            ...prev,
+            isAnswering: false,
+            isSecondQuestion: false,
+            goldenCards: prev.goldenCards - 1,
+          }));
+          setShowModal(false);
+        } else if (!state.isSecondQuestion) {
           addToHistory("Хата! Өстәмә сорауга җавап бирегез.", 'warning');
           const randomBackup = BACKUP_QUESTIONS[Math.floor(Math.random() * BACKUP_QUESTIONS.length)];
+          const shuffledBackup = (() => {
+            const indexed = randomBackup.a.map((opt: string, i: number) => ({ opt, isCorrect: i === randomBackup.correct }));
+            for (let i = indexed.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
+            }
+            return { options: indexed.map((x: any) => x.opt), correctAnswer: indexed.findIndex((x: any) => x.isCorrect) };
+          })();
           setBackupQuestion({
             ...randomBackup,
-            correctAnswer: randomBackup.correct,
-            options: randomBackup.a,
+            correctAnswer: shuffledBackup.correctAnswer,
+            options: shuffledBackup.options,
             description: randomBackup.q
           });
           setState(prev => ({ ...prev, isSecondQuestion: true }));
         } else {
-          addToHistory(`Яңадан хата! ${state.diceValue} клеткага артка.`, 'error');
-          setState(prev => ({ 
-            ...prev, 
-            isAnswering: false, 
+          addToHistory(`Яңадан хата! ${state.diceValue} клетка артка күчү.`, 'error');
+          setState(prev => ({
+            ...prev,
+            isAnswering: false,
             isSecondQuestion: false,
             playerPosition: Math.max(0, prev.playerPosition - prev.diceValue)
           }));
@@ -245,7 +488,7 @@ export default function App() {
         currentEvent: currentCell
       }));
 
-      addToHistory(`Шакмакта: ${roll}. ${nextPos}-нче клеткага күчү.`, 'info');
+      addToHistory(TATAR_ROLL_LABEL(roll), 'info');
       setShowModal(true);
     }, 1200);
   };
@@ -259,7 +502,6 @@ export default function App() {
       isRolling: false,
       diceValue: 1,
       goldenCards: 0,
-      currency: 0,
       isAnswering: false,
       isSecondQuestion: false,
     });
@@ -298,6 +540,105 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-emerald-50 text-emerald-950 font-sans p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white">
+
+      {/* ========= CHEAT MENU ========= */}
+      <AnimatePresence>
+        {showCheat && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ type: 'spring', damping: 18 }}
+            className="fixed top-4 left-1/2 -translate-x-1/2 z-[300] w-80 select-none"
+            style={{
+              background: 'linear-gradient(135deg,#0a0a0a,#111827)',
+              border: '2px solid #22c55e',
+              boxShadow: '0 0 30px rgba(34,197,94,0.3), 0 0 60px rgba(34,197,94,0.1)'
+            }}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between px-4 py-3 border-b border-green-500/30">
+              <div className="flex items-center gap-2">
+                <motion.div
+                  animate={{ opacity: [1, 0.3, 1] }}
+                  transition={{ repeat: Infinity, duration: 1 }}
+                  className="w-2 h-2 rounded-full bg-green-400"
+                />
+                <span className="text-green-400 font-mono text-xs font-bold tracking-widest uppercase">DEV CHEAT MODE</span>
+              </div>
+              <button
+                onClick={() => setShowCheat(false)}
+                className="text-green-600 hover:text-green-300 font-mono text-sm transition-colors"
+              >✕</button>
+            </div>
+
+            {/* Hint */}
+            <p className="text-green-700 font-mono text-[10px] px-4 pt-2 pb-1 tracking-widest">[F+J] — TOGGLE  |  FOR TESTING ONLY</p>
+
+            {/* Actions */}
+            <div className="flex flex-col gap-2 p-4">
+              {/* Add 1 card */}
+              <motion.button
+                whileHover={{ scale: 1.02, backgroundColor: '#14532d' }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  setState(prev => ({ ...prev, goldenCards: prev.goldenCards + 1 }));
+                  addToHistory('[CHEAT] +1 Тукай Картасы Үұстәленде', 'success');
+                }}
+                className="w-full py-3 px-4 font-mono text-sm font-bold text-green-300 border border-green-800 text-left transition-colors flex items-center gap-3"
+                style={{ background: '#0d1a0d' }}
+              >
+                <CreditCard className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+                +1 Тукай Картасы
+                <span className="ml-auto text-green-700 text-[10px]">Сан: {state.goldenCards}</span>
+              </motion.button>
+
+              {/* Add 5 cards */}
+              <motion.button
+                whileHover={{ scale: 1.02, backgroundColor: '#14532d' }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  setState(prev => ({ ...prev, goldenCards: prev.goldenCards + 5 }));
+                  addToHistory('[CHEAT] +5 Тукай Картасы Үңәйтелде', 'success');
+                }}
+                className="w-full py-3 px-4 font-mono text-sm font-bold text-green-300 border border-green-800 text-left transition-colors flex items-center gap-3"
+                style={{ background: '#0d1a0d' }}
+              >
+                <Sparkles className="w-4 h-4 text-yellow-400 flex-shrink-0" />
+                +5 Тукай Картасы
+                <span className="ml-auto text-green-700 text-[10px]">Сан: {state.goldenCards}</span>
+              </motion.button>
+
+              {/* Teleport to finish */}
+              <motion.button
+                whileHover={{ scale: 1.02, backgroundColor: '#3b0000' }}
+                whileTap={{ scale: 0.97 }}
+                onClick={() => {
+                  const finishPos = BOARD_SIZE - 1;
+                  setState(prev => ({
+                    ...prev,
+                    playerPosition: finishPos,
+                    isGameOver: true,
+                    goldenCards: prev.goldenCards + 1
+                  }));
+                  addToHistory('[CHEAT] Финишка телепортация!', 'success');
+                  setShowCheat(false);
+                  setShowModal(false);
+                }}
+                className="w-full py-3 px-4 font-mono text-sm font-bold text-red-400 border border-red-900 text-left transition-colors flex items-center gap-3"
+                style={{ background: '#1a0000' }}
+              >
+                <Trophy className="w-4 h-4 text-yellow-500 flex-shrink-0" />
+                Финишка телепорт
+                <span className="ml-auto text-red-800 text-[10px]">INSTANT WIN</span>
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showWelcome && <WelcomeScreen onStart={() => setShowWelcome(false)} />}
+      </AnimatePresence>
       <AnimatePresence>
         {state.isRolling && (
           <motion.div 
@@ -329,12 +670,8 @@ export default function App() {
         <div className="flex gap-4 items-center">
           <div className="flex flex-col items-end">
             <div className="flex items-center gap-2 text-emerald-800 font-black">
-              <Coins className="w-5 h-5 text-yellow-500" />
-              <span>{state.currency}</span>
-            </div>
-            <div className="flex items-center gap-2 text-emerald-800 font-black text-xs opacity-60">
-              <CreditCard className="w-4 h-4 text-yellow-600" />
-              <span>{state.goldenCards} Карта</span>
+              <CreditCard className="w-5 h-5 text-yellow-600" />
+              <span>{state.goldenCards} Тукай картасы</span>
             </div>
           </div>
           <button 
@@ -473,7 +810,7 @@ export default function App() {
               <span className="text-[10px] font-mono opacity-50">Соңгы вакыйгалар</span>
             </h3>
             
-            <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar space-y-3 scroll-smooth">
+            <div className="flex-1 overflow-y-scroll pr-2 custom-scrollbar space-y-3 scroll-smooth">
               <AnimatePresence initial={false}>
                 {state.history.map((entry: any, i) => (
                   <motion.div 
@@ -581,15 +918,15 @@ export default function App() {
 
                 <div className="text-center md:text-left flex-1">
                   <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-[0.2em] mb-3 border-2 border-emerald-200">
-                    {state.isAnswering ? "Викторина сынавы" : "Клетка вакыйгасы"}
+                    {state.isAnswering ? "Белем тикшерү" : "Клетка вакыйгасы"}
                   </div>
                   <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-emerald-900 leading-none mb-4">
                     {state.isAnswering ? (state.isSecondQuestion ? "Өстәмә сорау!" : "Белем сынавы") : state.currentEvent.title}
                   </h2>
                   <div className="flex items-center justify-center md:justify-start gap-4 text-emerald-600/60 font-mono text-xs font-bold">
-                    <span className="flex items-center gap-1"><User className="w-3 h-3" /> {state.isAnswering ? "Тукай" : "Герой"}</span>
+                    <span className="flex items-center gap-1"><User className="w-3 h-3" /> {state.isAnswering ? "Уенчы" : "Герой"}</span>
                     <span className="w-1 h-1 bg-emerald-200 rounded-full" />
-                    <span className="flex items-center gap-1"><Sparkles className="w-3 h-3" /> {state.currentEvent.type}</span>
+                    <span className="flex items-center gap-1"><Sparkles className="w-3 h-3" /> {state.currentEvent.type === 'question' ? 'сорау' : state.currentEvent.type === 'hero' ? 'герой' : state.currentEvent.type === 'safe' ? 'тынычлык' : state.currentEvent.type === 'bonus' ? 'бонус' : state.currentEvent.type}</span>
                   </div>
                 </div>
               </div>
@@ -699,45 +1036,57 @@ export default function App() {
               
               <h1 className="text-8xl font-black uppercase tracking-tighter mb-6 drop-shadow-lg">Җиңү!</h1>
               
-              <div className="relative mb-12 group">
-                <div className="absolute -inset-4 bg-yellow-400 rounded-2xl blur-2xl opacity-20 group-hover:opacity-40 transition-opacity" />
+              <div className="relative mb-12 group" style={{ perspective: '1000px' }}>
+                <div className="absolute -inset-6 bg-yellow-400 rounded-3xl blur-3xl opacity-30 group-hover:opacity-50 transition-opacity animate-pulse" />
                 <motion.div
-                  initial={{ rotateY: 0 }}
-                  animate={{ rotateY: 360 }}
-                  transition={{ repeat: Infinity, duration: 6, ease: "linear" }}
-                  className="w-64 h-40 bg-gradient-to-br from-yellow-200 via-yellow-400 to-yellow-600 rounded-xl border-4 border-yellow-100 shadow-2xl flex flex-col items-center justify-center p-4 text-emerald-900 relative preserve-3d"
+                  animate={{ rotateY: [0, 180, 360] }}
+                  transition={{ repeat: Infinity, duration: 5, ease: [0.4, 0, 0.6, 1], times: [0, 0.5, 1] }}
+                  style={{ transformStyle: 'preserve-3d' }}
+                  className="w-72 h-44 relative"
                 >
-                  <div className="absolute top-2 left-2 opacity-20">
-                    <TatarOrnament className="w-8 h-8" />
+                  {/* Front face */}
+                  <div
+                    style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
+                    className="absolute inset-0 w-full h-full bg-gradient-to-br from-yellow-200 via-yellow-400 to-amber-600 rounded-2xl border-4 border-yellow-100 shadow-2xl flex flex-col items-center justify-center p-5 text-emerald-900"
+                  >
+                    <div className="absolute top-2 left-2 opacity-20"><TatarOrnament className="w-8 h-8" /></div>
+                    <div className="absolute bottom-2 right-2 opacity-20"><TatarOrnament className="w-8 h-8" /></div>
+                    <div className="flex items-center gap-3 w-full mb-2">
+                      <div className="w-12 h-12 bg-white/40 rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden border-2 border-white/60 shadow-inner">
+                        <img
+                          src="https://avatars.mds.yandex.net/i?id=84c7c28b2d73e2684e67d3867411fe209c0d8277-8310551-images-thumbs&n=13"
+                          alt="Tuqay"
+                          className="w-full h-full object-cover"
+                          referrerPolicy="no-referrer"
+                        />
+                      </div>
+                      <div className="text-left leading-tight">
+                        <span className="font-bold uppercase tracking-widest text-[9px] block opacity-60 mb-0.5">Тукай Картасы</span>
+                        <span className="font-black uppercase tracking-tight text-base leading-none">Габдулла Тукай</span>
+                      </div>
+                    </div>
+                    <div className="w-full h-px bg-emerald-900/20 my-1" />
+                    <div className="flex items-center justify-between w-full px-1 mt-1">
+                      <div className="flex items-center gap-1 font-black text-xl">
+                        <CreditCard className="w-5 h-5 text-yellow-700" />
+                        <span>TUQAY</span>
+                      </div>
+                      <div className="text-[10px] font-mono font-bold opacity-40">
+                        1826 – 1913
+                      </div>
+                    </div>
                   </div>
-                  <div className="absolute bottom-2 right-2 opacity-20">
-                    <TatarOrnament className="w-8 h-8" />
-                  </div>
-                  
-                  <div className="flex items-center gap-4 mb-2">
-                    <div className="w-12 h-12 bg-white/30 rounded-full flex items-center justify-center overflow-hidden border-2 border-white/50 shadow-inner">
-                      <img src="https://picsum.photos/seed/tuqay_portrait/100/100" alt="Tuqay" className="w-full h-full object-cover grayscale brightness-110" referrerPolicy="no-referrer" />
-                    </div>
-                    <div className="text-left">
-                      <span className="font-black uppercase tracking-tighter text-xs block opacity-60">Валюта Картасы</span>
-                      <span className="font-black uppercase tracking-tighter text-lg leading-none">Габдулла Тукай</span>
-                    </div>
-                  </div>
-                  
-                  <div className="w-full h-px bg-emerald-900/10 my-2" />
-                  
-                  <div className="flex items-center justify-between w-full px-2">
-                    <div className="flex items-center gap-1 font-black text-2xl">
-                      <Coins className="w-6 h-6 text-yellow-700" />
-                      <span>500</span>
-                    </div>
-                    <div className="text-[10px] font-mono font-bold opacity-40">
-                      ID: {Math.random().toString(36).substr(2, 6).toUpperCase()}
-                    </div>
+                  {/* Back face */}
+                  <div
+                    style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+                    className="absolute inset-0 w-full h-full bg-gradient-to-br from-amber-600 via-yellow-400 to-yellow-200 rounded-2xl border-4 border-yellow-100 shadow-2xl flex flex-col items-center justify-center p-5 text-emerald-900"
+                  >
+                    <TatarOrnament className="w-20 h-20 text-emerald-900/20" variant={2} />
+                    <span className="font-black text-sm uppercase tracking-widest mt-2 opacity-70">TUQAY QUEST</span>
                   </div>
                 </motion.div>
-                <motion.div 
-                  animate={{ scale: [1, 1.1, 1] }}
+                <motion.div
+                  animate={{ scale: [1, 1.08, 1] }}
                   transition={{ repeat: Infinity, duration: 1.5 }}
                   className="absolute -top-6 -right-6 bg-red-600 text-white text-sm font-black px-4 py-2 uppercase tracking-widest rotate-12 shadow-xl border-2 border-white"
                 >
@@ -746,7 +1095,7 @@ export default function App() {
               </div>
 
               <p className="text-2xl font-bold mb-12 max-w-2xl leading-relaxed text-emerald-50">
-                Сез Тукай дөньясын яхшы беләсез! Сезгә Алтын Карта һәм 500 валюта бирелә.
+                Сез Тукай дөньясын яхшы беләсез! Сезгә Тукай Картасы бирелә!
               </p>
 
               <button 

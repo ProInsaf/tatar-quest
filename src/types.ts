@@ -11,6 +11,7 @@ export interface Cell {
   heroImage?: string;
 }
 
+
 export interface GameState {
   playerPosition: number;
   isGameOver: boolean;
@@ -19,7 +20,6 @@ export interface GameState {
   isRolling: boolean;
   diceValue: number;
   goldenCards: number;
-  currency: number;
   isAnswering: boolean;
   isSecondQuestion: boolean;
 }

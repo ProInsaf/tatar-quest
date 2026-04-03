@@ -46,6 +46,17 @@ export const BACKUP_QUESTIONS = [
   { q: "Тукайның 'Шурале' әкиятендә Былтыр каян килә?", a: ["Авылдан", "Шәһәрдән", "Урманнан"], correct: 0 },
 ];
 
+const shuffleAnswers = (options: string[], correctIndex: number): { options: string[], correctAnswer: number } => {
+  const indexed = options.map((opt, i) => ({ opt, isCorrect: i === correctIndex }));
+  // Fisher-Yates shuffle
+  for (let i = indexed.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
+  }
+  const newCorrect = indexed.findIndex(x => x.isCorrect);
+  return { options: indexed.map(x => x.opt), correctAnswer: newCorrect };
+};
+
 export const generateBoard = (): Cell[] => {
   const board: Cell[] = [];
   
@@ -89,13 +100,14 @@ export const generateBoard = (): Cell[] => {
       heroIdx++;
     } else if (questionPositions.has(i)) {
       const q = TUQAY_QUESTIONS[qIdx % TUQAY_QUESTIONS.length];
+      const shuffled = shuffleAnswers(q.a, q.correct);
       board.push({ 
         id: i, 
         type: 'question', 
         title: `Сорау #${qIdx + 1}`, 
         description: q.q,
-        options: q.a,
-        correctAnswer: q.correct,
+        options: shuffled.options,
+        correctAnswer: shuffled.correctAnswer,
         heroImage: (q as any).image // Optional image for questions
       });
       qIdx++;
@@ -104,7 +116,7 @@ export const generateBoard = (): Cell[] => {
         id: i, 
         type: 'safe', 
         title: `Клетка ${i}`, 
-        description: 'Буш клетка. Бернәрсе дә эшләргә кирәкми.' 
+        description: 'Буш клетка. Монда бернәрсә дә эшләргә кирәк түгел.' 
       });
     }
   }
