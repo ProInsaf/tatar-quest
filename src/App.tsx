@@ -360,50 +360,54 @@ export default function App() {
   };
 
   const handleCellAction = useCallback((cell: Cell) => {
-    let newPos = state.playerPosition;
     let type: 'info' | 'success' | 'warning' | 'error' = 'info';
 
     if (cell.type === 'hero') {
       const heroData = TUQAY_HEROES.find(h => h.title === cell.title);
       if (heroData) {
-        newPos = Math.max(0, state.playerPosition + heroData.move);
         type = 'error';
 
         if (cell.title === 'Шүрәле') {
           setState(prev => ({ ...prev, goldenCards: Math.max(0, prev.goldenCards - 1) }));
         }
 
-        if (newPos === BOARD_SIZE - 1) {
-          setState(prev => ({
-            ...prev,
-            playerPosition: newPos,
-            isGameOver: true,
-            goldenCards: prev.goldenCards + 1
-          }));
-          addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success');
-        } else {
-          setState(prev => ({ ...prev, playerPosition: newPos }));
-          const steps = Math.abs(heroData.move);
-          const direction = heroData.move < 0 ? '\u0430\u0440\u0442\u043a\u0430' : '\u0430\u043b\u0433\u0430';
-          addToHistory(`${steps} \u043a\u043b\u0435\u0442\u043a\u0430\u0433\u0430 ${direction}`, type);
-        }
+        setState(prev => {
+          const newPos = Math.max(0, prev.playerPosition + heroData.move);
+          
+          if (newPos === BOARD_SIZE - 1) {
+            setTimeout(() => addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success'), 0);
+            return {
+              ...prev,
+              playerPosition: newPos,
+              isGameOver: true,
+              goldenCards: prev.goldenCards + 1
+            };
+          } else {
+            const steps = Math.abs(heroData.move);
+            const direction = heroData.move < 0 ? '\u0430\u0440\u0442\u043a\u0430' : '\u0430\u043b\u0433\u0430';
+            setTimeout(() => addToHistory(`${steps} \u043a\u043b\u0435\u0442\u043a\u0430\u0433\u0430 ${direction}`, type), 0);
+            return { ...prev, playerPosition: newPos };
+          }
+        });
         return;
       }
     }
 
-    // non-hero cells
-    if (newPos === BOARD_SIZE - 1) {
-      setState(prev => ({
-        ...prev,
-        playerPosition: newPos,
-        isGameOver: true,
-        goldenCards: prev.goldenCards + 1
-      }));
-      addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success');
-    } else {
-      setState(prev => ({ ...prev, playerPosition: newPos }));
-    }
-  }, [state.playerPosition]);
+    // non-hero cells (bonus/safe/start)
+    setState(prev => {
+      const newPos = prev.playerPosition;
+      if (newPos === BOARD_SIZE - 1 && !prev.isGameOver) {
+        setTimeout(() => addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success'), 0);
+        return {
+          ...prev,
+          playerPosition: newPos,
+          isGameOver: true,
+          goldenCards: prev.goldenCards + 1
+        };
+      }
+      return prev;
+    });
+  }, []);
 
   const handleAnswer = (index: number) => {
     if (isAnswerChecked) return;
@@ -449,12 +453,12 @@ export default function App() {
           });
           setState(prev => ({ ...prev, isSecondQuestion: true }));
         } else {
-          addToHistory(`Яңадан хата! ${state.diceValue} клетка артка күчү.`, 'error');
+          addToHistory(`Яңадан хата! 2 клетка артка күчү.`, 'error');
           setState(prev => ({
             ...prev,
             isAnswering: false,
             isSecondQuestion: false,
-            playerPosition: Math.max(0, prev.playerPosition - prev.diceValue)
+            playerPosition: Math.max(0, prev.playerPosition - 2)
           }));
           setShowModal(false);
         }

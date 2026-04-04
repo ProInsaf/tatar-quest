@@ -36,6 +36,12 @@ export const TUQAY_QUESTIONS = [
   { q: "Тукайның иң танылган әкиятендәге маңгаенда мөгезе булган урман җене ничек атала?", a: ["Шүрәле", "Су анасы", "Кисекбаш"], correct: 0 },
   { q: "Нәни Габдулланы Казанның Пөшмән базарында кем аша яңа гаиләгә (уллыкка) бирәләр?", a: ["Мөхәммәтвәли", "Сәгди", "Әхмәт"], correct: 0 },
   { q: "Тукай дуслары белән бергә чыгарган, эчендә бик күп кызыклы рәсемнәр һәм көлкеле шигырьләр булган журнал ничек атала?", a: ["«Ялт-Йолт»", "«Казан»", "«Мәгариф»"], correct: 0 },
+  { q: "Габдулла Тукайга балачакта ничек иркәләп эндәшкәннәр?", a: ["Апуш", "Габдуллаҗан", "Тукай"], correct: 0 },
+  { q: "Шагыйрьнең кайсы әсәрен туган тел гимны дип атыйлар?", a: ["«Туган тел»", "«Пар ат»", "«Шүрәле»"], correct: 0 },
+  { q: "\"Пар ат\" әсәрендә Казан шәһәре нинди образ буларак сурәтләнә?", a: ["Нурлы Казан", "Караңгы шәһәр", "Ят җир"], correct: 0 },
+  { q: "Габдулла Тукайның әнисенең исеме?", a: ["Мәмдүдә", "Бибисара", "Гайшә"], correct: 0 },
+  { q: "Шагыйрь Казанда урнашкан \"Болгар\" кунакханәсенең ничәнче бүлмәсендә яшәгән?", a: ["40", "15", "25"], correct: 0 },
+  { q: "Габдулланың әтисе Мөхәммәтгариф Кушлавыч авылында кем булып эшләгән?", a: ["Мулла", "Укытучы", "Крестьян"], correct: 0 },
 ];
 
 export const BACKUP_QUESTIONS = [
@@ -66,7 +72,7 @@ const shuffleAnswers = (options: string[], correctIndex: number): { options: str
 
 export const generateBoard = (): Cell[] => {
   const board: Cell[] = [];
-  
+
   // Fixed positions for heroes and questions to ensure exact counts
   const heroPositions = new Set<number>();
   while (heroPositions.size < 10) {
@@ -97,10 +103,10 @@ export const generateBoard = (): Cell[] => {
 
     if (heroPositions.has(i)) {
       const hero = TUQAY_HEROES[heroIdx % TUQAY_HEROES.length];
-      board.push({ 
-        id: i, 
-        type: 'hero', 
-        title: hero.title, 
+      board.push({
+        id: i,
+        type: 'hero',
+        title: hero.title,
         description: hero.description,
         heroImage: hero.image || `https://picsum.photos/seed/${hero.title}_tuqay/200/200`
       });
@@ -108,10 +114,10 @@ export const generateBoard = (): Cell[] => {
     } else if (questionPositions.has(i)) {
       const q = TUQAY_QUESTIONS[qIdx % TUQAY_QUESTIONS.length];
       const shuffled = shuffleAnswers(q.a, q.correct);
-      board.push({ 
-        id: i, 
-        type: 'question', 
-        title: `Сорау #${qIdx + 1}`, 
+      board.push({
+        id: i,
+        type: 'question',
+        title: `Сорау #${qIdx + 1}`,
         description: q.q,
         options: shuffled.options,
         correctAnswer: shuffled.correctAnswer,
@@ -119,14 +125,14 @@ export const generateBoard = (): Cell[] => {
       });
       qIdx++;
     } else {
-      board.push({ 
-        id: i, 
-        type: 'safe', 
-        title: `Клетка ${i}`, 
-        description: 'Буш клетка. Монда бернәрсә дә эшләргә кирәк түгел.' 
+      board.push({
+        id: i,
+        type: 'safe',
+        title: `Клетка ${i}`,
+        description: 'Буш клетка. Монда бернәрсә дә эшләргә кирәк түгел.'
       });
     }
   }
-  
+
   return board;
 };
