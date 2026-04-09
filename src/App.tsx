@@ -208,13 +208,13 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 15px rgba(250,204,21,0.4))'
+              filter: 'drop-shadow(0 0 10px rgba(250,204,21,0.4))'
             }}
           >
             ТУКАЙ
           </h1>
           <h2
-            className="text-[16px] sm:text-4xl font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-emerald-300 mt-1 sm:mt-2"
+            className="text-[14px] sm:text-4xl font-black uppercase tracking-[0.15em] sm:tracking-[0.3em] text-emerald-300 mt-1 sm:mt-2"
           >
             МОНОПОЛИЯСЕ
           </h2>
@@ -225,7 +225,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="mt-3 sm:mt-4 text-emerald-400 font-mono text-[10px] sm:text-sm uppercase tracking-widest px-4"
+          className="mt-2 sm:mt-4 text-emerald-400 font-mono text-[9px] sm:text-sm uppercase tracking-widest px-4"
         >
           Тукай дөньясы буйлап сәяхәт
         </motion.p>
@@ -262,10 +262,10 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
             disabled={launched}
-            className="relative px-8 sm:px-20 py-4 sm:py-6 font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] text-[16px] sm:text-3xl text-emerald-950 border-2 sm:border-4 border-yellow-300 overflow-hidden rounded-md sm:rounded-none"
+            className="relative px-6 sm:px-20 py-3 sm:py-6 font-black uppercase tracking-[0.1em] sm:tracking-[0.25em] text-[14px] sm:text-3xl text-emerald-950 border-2 sm:border-4 border-yellow-300 overflow-hidden rounded-md sm:rounded-none"
             style={{
               background: 'linear-gradient(135deg, #fde68a, #f59e0b)',
-              boxShadow: '4px 4px 0 rgba(0,0,0,0.5), 0 0 20px rgba(250,204,21,0.3)'
+              boxShadow: '4px 4px 0 rgba(0,0,0,0.5), 0 0 15px rgba(250,204,21,0.3)'
             }}
           >
             <motion.div
@@ -543,7 +543,8 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-[100dvh] bg-emerald-50 text-emerald-950 font-sans p-1.5 sm:p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white pb-20 sm:pb-8">
+    <div className="min-h-screen bg-emerald-900 selection:bg-emerald-800 selection:text-white tatar-pattern bg-fixed">
+      <div className="min-h-[100dvh] bg-emerald-50/95 text-emerald-950 font-sans p-1 sm:p-4 md:p-8 flex flex-col items-center pb-12 sm:pb-8 overflow-x-hidden">
 
       {/* ========= CHEAT MENU ========= */}
       <AnimatePresence>
@@ -644,6 +645,7 @@ export default function App() {
         {showWelcome && <WelcomeScreen onStart={() => {
           setShowWelcome(false);
           setShowStartMessage(true);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }} />}
       </AnimatePresence>
       <AnimatePresence>
@@ -722,11 +724,11 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8 lg:items-start lg:h-[calc(100vh-140px)]">
+      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8 lg:items-start lg:min-h-[calc(100vh-140px)]">
         {/* Board Section */}
         <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-0.5 sm:p-8 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative w-full lg:h-full flex items-center justify-center">
-          <div className="flex justify-center h-full items-center w-full">
-            <div className="relative w-full max-w-[100vw] sm:max-w-none aspect-[1/1] sm:aspect-square md:max-w-[70vh] lg:max-w-none lg:h-full lg:aspect-square sm:m-0 mx-auto">
+          <div className="flex justify-center h-full items-center w-full relative">
+            <div className="relative w-full aspect-square max-w-[min(100vw-0.5rem,75vh)] md:max-w-[800px] lg:max-w-none lg:h-full lg:aspect-square sm:m-0 mx-auto">
               <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
@@ -930,12 +932,12 @@ export default function App() {
       {/* Event Modal */}
       <AnimatePresence>
         {showModal && state.currentEvent && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-emerald-950/80 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-emerald-950/80 backdrop-blur-sm">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: -20 }}
-              className="bg-white border-4 md:border-8 border-emerald-800 p-6 md:p-12 max-w-2xl w-full shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] md:shadow-[32px_32px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden max-h-[90vh] overflow-y-auto"
+              className="bg-white border-4 md:border-8 border-emerald-800 p-4 sm:p-12 max-w-2xl w-full shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] md:shadow-[32px_32px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden max-h-[95vh] overflow-y-auto"
             >
               <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-50 rounded-full opacity-50 blur-3xl" />
               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-red-50 rounded-full opacity-30 blur-3xl" />
@@ -1152,6 +1154,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
     </div>
   );
 }
