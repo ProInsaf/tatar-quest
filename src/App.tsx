@@ -86,16 +86,16 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
   return (
     <motion.div 
       animate={controls}
-      className="w-16 h-16 sm:w-32 sm:h-32 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-3xl shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[12px_12px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-6 relative group"
+      className="w-16 h-16 sm:w-48 sm:h-48 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-[2.5rem] shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-10 relative group"
     >
-      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-4 w-full h-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-6 w-full h-full">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex items-center justify-center">
             {dots[value].includes(i) && (
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="w-2 h-2 sm:w-5 sm:h-5 bg-emerald-900 rounded-full shadow-sm" 
+                className="w-2 h-2 sm:w-8 sm:h-8 bg-emerald-900 rounded-full shadow-sm" 
               />
             )}
           </div>
@@ -711,12 +711,12 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center w-full h-full"
+            className="fixed inset-0 z-[300] pointer-events-none flex items-center justify-center w-full h-full bg-black/20"
           >
             <motion.div
               animate={{ scale: [1, 1.2, 1], opacity: [0, 1, 0] }}
               transition={{ duration: 0.5, repeat: Infinity }}
-              className="text-4xl sm:text-7xl font-black text-emerald-800 uppercase tracking-tighter italic drop-shadow-2xl text-center px-4"
+              className="text-5xl sm:text-8xl font-black text-white sm:text-emerald-800 uppercase tracking-tighter italic drop-shadow-[0_0_20px_rgba(0,0,0,0.5)] sm:drop-shadow-2xl text-center px-4"
             >
               ТЫРС-ТЫРС!
             </motion.div>
@@ -724,36 +724,36 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <header className="max-w-5xl w-full mb-2 sm:mb-8 flex flex-row justify-between items-center sm:items-end border-b-2 sm:border-b-4 border-emerald-700 pb-2 sm:pb-4 relative gap-0">
+      <header className="max-w-5xl w-full mb-0 sm:mb-8 flex flex-row justify-between items-center sm:items-end border-b-2 sm:border-b-4 border-emerald-700 pb-2 sm:pb-4 relative gap-0 bg-emerald-800 sm:bg-transparent p-3 sm:p-0 shadow-lg sm:shadow-none z-50 rounded-b-xl sm:rounded-none">
         <TatarOrnament className="absolute -top-4 -left-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
         <TatarOrnament className="absolute -top-4 -right-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
         
-        <div>
-          <h1 className="text-xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
+        <div className="flex flex-col">
+          <h1 className="text-xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-white sm:text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
           <p className="hidden sm:block text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
-        <div className="flex gap-2 sm:gap-4 items-center">
+        <div className="flex gap-2 sm:gap-4 items-center text-white sm:text-emerald-850">
           <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1 sm:gap-2 text-emerald-800 font-black text-[10px] sm:text-base">
-              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-600" />
+            <div className="flex items-center gap-1 sm:gap-2 font-black text-[10px] sm:text-base">
+              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-300 sm:text-yellow-600" />
               <span>{state.goldenCards} <span className="hidden sm:inline">Тукай картасы</span></span>
             </div>
           </div>
           <button 
             onClick={resetGame}
-            className="p-1 sm:p-3 hover:bg-emerald-800 hover:text-white transition-all border-2 sm:border-4 border-emerald-800 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-white shadow-[2px_2px_0px_0px_rgba(6,78,59,1)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
+            className="p-1 sm:p-3 sm:hover:bg-emerald-800 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-800 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
           >
             <RotateCcw className="w-2 h-2 sm:w-4 h-4" /> <span className="hidden sm:inline">Яңадан</span>
           </button>
         </div>
       </header>
 
-      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8 lg:items-start lg:min-h-[calc(100vh-140px)]">
+      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8 lg:items-start lg:min-h-[min(calc(100vh-160px),900px)] lg:max-h-[min(calc(100vh-160px),900px)]">
         {/* Board Section */}
-        <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-0.5 sm:p-8 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative w-full lg:h-full flex items-center justify-center">
+        <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-0.5 sm:p-2 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative w-full lg:h-full flex items-center justify-center">
           <div className="flex justify-center h-full items-center w-full relative">
-            <div className="relative w-full aspect-square max-w-[min(100vw-0.5rem,75vh)] md:max-w-[800px] lg:max-w-none lg:h-full lg:aspect-square sm:m-0 mx-auto">
+            <div className="relative w-full aspect-square max-w-[min(100vw-0.5rem,78vh)] md:max-w-[75vh] lg:max-w-none lg:h-full lg:aspect-square sm:m-0 mx-auto">
               <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
@@ -862,7 +862,7 @@ export default function App() {
               className={`group relative flex-1 sm:w-full py-3 sm:py-5 font-black uppercase tracking-widest border-2 sm:border-4 border-emerald-900 transition-all text-xs sm:text-lg overflow-hidden ${
                 state.isRolling || state.isGameOver 
                   ? 'bg-stone-200 text-stone-400 cursor-not-allowed' 
-                  : 'bg-red-600 text-white hover:bg-red-500 active:translate-y-1 active:shadow-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+                  : 'bg-red-600 text-white sm:hover:bg-red-500 active:translate-y-1 active:shadow-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
               }`}
             >
               {!state.isRolling && !state.isGameOver && (
@@ -1040,12 +1040,12 @@ export default function App() {
 
                     return (
                       <motion.button 
-                        whileHover={!isAnswerChecked ? { x: 10, scale: 1.02 } : {}}
+                        whileHover={!isAnswerChecked && window.innerWidth > 640 ? { x: 10, scale: 1.02 } : {}}
                         whileTap={!isAnswerChecked ? { scale: 0.98 } : {}}
                         key={idx}
                         onClick={() => handleAnswer(idx)}
                         disabled={isAnswerChecked}
-                        className={`w-full py-3 md:py-5 px-4 md:px-8 border-4 ${borderColor} ${bgColor} ${textColor} font-black uppercase tracking-widest transition-all text-xs md:text-lg text-left flex items-center justify-between group/btn shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] md:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] ${!isAnswerChecked ? 'hover:shadow-none hover:bg-emerald-800 hover:text-white' : ''}`}
+                        className={`w-full py-3 md:py-5 px-4 md:px-8 border-4 ${borderColor} ${bgColor} ${textColor} font-black uppercase tracking-widest transition-all text-xs md:text-lg text-left flex items-center justify-between group/btn shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] md:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] ${!isAnswerChecked ? 'sm:hover:shadow-none sm:hover:bg-emerald-800 sm:hover:text-white' : ''}`}
                       >
                         <div className="flex items-center gap-3 md:gap-6">
                           <span className={`w-6 h-6 md:w-10 md:h-10 ${isAnswerChecked ? 'bg-white/20' : 'bg-emerald-100 group-hover/btn:bg-emerald-700'} flex items-center justify-center rounded-full border-2 border-current text-[10px] md:text-sm transition-colors font-mono flex-shrink-0`}>
