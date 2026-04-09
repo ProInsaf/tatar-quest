@@ -162,12 +162,12 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-        className="absolute w-[600px] h-[600px] rounded-full border-2 border-emerald-400"
+        className="absolute w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] rounded-full border-2 border-emerald-400"
       />
       <motion.div
         animate={{ scale: [1.1, 1, 1.1], opacity: [0.04, 0.12, 0.04] }}
         transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-        className="absolute w-[800px] h-[800px] rounded-full border border-yellow-400"
+        className="absolute w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] rounded-full border border-yellow-400"
       />
 
       {/* Content */}
@@ -202,7 +202,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           transition={{ delay: 0.4, type: 'spring', damping: 12 }}
         >
           <h1
-            className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-1"
+            className="text-4xl sm:text-7xl font-black uppercase tracking-tighter leading-none mb-1"
             style={{
               background: 'linear-gradient(135deg, #fde68a 0%, #f59e0b 40%, #ffffff 60%, #6ee7b7 100%)',
               WebkitBackgroundClip: 'text',
@@ -214,7 +214,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
             ТУКАЙ
           </h1>
           <h2
-            className="text-2xl md:text-4xl font-black uppercase tracking-[0.3em] text-emerald-300 mt-2"
+            className="text-xl sm:text-4xl font-black uppercase tracking-[0.3em] text-emerald-300 mt-2"
             style={{ letterSpacing: '0.35em' }}
           >
             МОНОПОЛИЯСЕ
@@ -263,7 +263,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
             disabled={launched}
-            className="relative px-20 py-6 font-black uppercase tracking-[0.25em] text-2xl md:text-3xl text-emerald-950 border-4 border-yellow-300 overflow-hidden"
+            className="relative px-10 sm:px-20 py-4 sm:py-6 font-black uppercase tracking-[0.25em] text-xl sm:text-3xl text-emerald-950 border-4 border-yellow-300 overflow-hidden"
             style={{
               background: 'linear-gradient(135deg, #fde68a, #f59e0b)',
               boxShadow: '8px 8px 0 rgba(0,0,0,0.5), 0 0 40px rgba(250,204,21,0.3)'
@@ -734,7 +734,7 @@ export default function App() {
               <TatarOrnament className="absolute bottom-2 right-2 w-8 h-8 text-emerald-100" />
 
           <div 
-            className="grid grid-cols-11 grid-rows-11 gap-1 min-w-[600px] aspect-square"
+            className="grid grid-cols-11 grid-rows-11 gap-0.5 sm:gap-1 w-full h-full aspect-square"
             style={{ gridTemplateColumns: 'repeat(11, 1fr)', gridTemplateRows: 'repeat(11, 1fr)' }}
           >
             {board.map((cell, idx) => {
