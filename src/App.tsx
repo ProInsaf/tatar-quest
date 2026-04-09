@@ -1050,7 +1050,7 @@ export default function App() {
                         className={`w-full py-3 md:py-5 px-4 md:px-8 border-4 ${borderColor} ${bgColor} ${textColor} font-black uppercase tracking-widest transition-all text-xs md:text-lg text-left flex items-center justify-between group/btn shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] md:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] ${!isAnswerChecked ? 'sm:hover:shadow-none sm:hover:bg-emerald-800 sm:hover:text-white' : ''}`}
                       >
                         <div className="flex items-center gap-3 md:gap-6">
-                          <span className={`w-6 h-6 md:w-10 md:h-10 ${isAnswerChecked ? 'bg-white/20' : 'bg-emerald-100 group-hover/btn:bg-emerald-700'} flex items-center justify-center rounded-full border-2 border-current text-[10px] md:text-sm transition-colors font-mono flex-shrink-0`}>
+                          <span className={`w-6 h-6 md:w-10 md:h-10 ${isAnswerChecked ? 'bg-white/20' : 'bg-emerald-100 sm:group-hover/btn:bg-emerald-700'} flex items-center justify-center rounded-full border-2 border-current text-[10px] md:text-sm transition-colors font-mono flex-shrink-0`}>
                             {String.fromCharCode(65 + idx)}
                           </span>
                           <span className="leading-tight">{opt}</span>
