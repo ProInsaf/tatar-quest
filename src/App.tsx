@@ -659,7 +659,7 @@ export default function App() {
               initial={{ scale: 0.8, y: 50, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
               exit={{ scale: 0.9, y: -20, opacity: 0 }}
-              className="bg-white border-4 border-emerald-800 p-8 rounded-2xl max-w-lg w-full text-center shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
+              className="bg-white border-4 border-emerald-800 p-8 rounded-2xl max-w-2xl w-full text-center shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
             >
               <TatarOrnament className="absolute -top-10 -left-10 w-32 h-32 text-emerald-50 opacity-50" />
               <TatarOrnament className="absolute -bottom-10 -right-10 w-32 h-32 text-emerald-50 opacity-50" />
@@ -803,7 +803,7 @@ export default function App() {
               <img 
                 src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
                 alt="Тукай Юлы" 
-                className="absolute inset-0 w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-700" 
+                className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700" 
               />
               <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-20">
