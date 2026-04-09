@@ -86,16 +86,16 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
   return (
     <motion.div 
       animate={controls}
-      className="w-16 h-16 sm:w-24 sm:h-24 bg-white border-2 sm:border-4 border-emerald-800 rounded-lg sm:rounded-2xl shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-4 relative group"
+      className="w-16 h-16 sm:w-32 sm:h-32 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-3xl shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[12px_12px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-6 relative group"
     >
-      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-2 w-full h-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-4 w-full h-full">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex items-center justify-center">
             {dots[value].includes(i) && (
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="w-2 h-2 sm:w-3 sm:h-3 bg-emerald-900 rounded-full shadow-sm" 
+                className="w-2 h-2 sm:w-5 sm:h-5 bg-emerald-900 rounded-full shadow-sm" 
               />
             )}
           </div>
@@ -569,7 +569,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-[100dvh] text-emerald-950 font-sans p-1 sm:p-4 md:p-8 flex flex-col items-center pb-12 sm:pb-8 overflow-x-hidden relative bg-emerald-50/95">
+    <div className="min-h-[100dvh] text-emerald-950 font-sans p-1 sm:p-4 md:p-8 flex flex-col items-center pb-12 sm:pb-8 overflow-x-hidden relative bg-emerald-900 sm:bg-emerald-50/95 tatar-pattern bg-fixed">
 
       {/* ========= CHEAT MENU ========= */}
       <AnimatePresence>
@@ -711,12 +711,12 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center"
+            className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center w-full h-full"
           >
             <motion.div
               animate={{ scale: [1, 1.2, 1], opacity: [0, 1, 0] }}
               transition={{ duration: 0.5, repeat: Infinity }}
-              className="text-6xl font-black text-emerald-800 uppercase tracking-tighter italic drop-shadow-2xl"
+              className="text-4xl sm:text-7xl font-black text-emerald-800 uppercase tracking-tighter italic drop-shadow-2xl text-center px-4"
             >
               ТЫРС-ТЫРС!
             </motion.div>
