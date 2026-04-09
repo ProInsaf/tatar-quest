@@ -86,7 +86,7 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
   return (
     <motion.div 
       animate={controls}
-      className="w-16 h-16 sm:w-72 sm:h-72 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-[3.5rem] shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[24px_24px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-14 relative group"
+      className="w-16 h-16 sm:w-full sm:max-w-[450px] sm:aspect-square bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-[3.5rem] shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[24px_24px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-10 relative group"
     >
       <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-10 w-full h-full">
         {Array.from({ length: 9 }).map((_, i) => (
@@ -95,7 +95,7 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="w-2 h-2 sm:w-12 sm:h-12 bg-emerald-900 rounded-full shadow-sm" 
+                className="w-2 h-2 sm:w-16 sm:h-16 bg-emerald-900 rounded-full shadow-sm" 
               />
             )}
           </div>
