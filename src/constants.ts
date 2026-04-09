@@ -74,7 +74,10 @@ export const generateBoard = (): Cell[] => {
   const heroPositions = new Set<number>();
   while (heroPositions.size < 10) {
     const p = Math.floor(Math.random() * (BOARD_SIZE - 2)) + 1;
-    heroPositions.add(p);
+    // Ensure no two traps are adjacent
+    if (!heroPositions.has(p - 1) && !heroPositions.has(p + 1)) {
+      heroPositions.add(p);
+    }
   }
 
   const questionPositions = new Set<number>();
