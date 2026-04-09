@@ -86,16 +86,16 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
   return (
     <motion.div 
       animate={controls}
-      className="w-16 h-16 sm:w-64 sm:h-64 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-[3rem] shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[20px_20px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-12 relative group"
+      className="w-16 h-16 sm:w-72 sm:h-72 bg-white border-2 sm:border-8 border-emerald-800 rounded-lg sm:rounded-[3.5rem] shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[24px_24px_0px_0px_rgba(6,78,59,1)] flex items-center justify-center p-2 sm:p-14 relative group"
     >
-      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-8 w-full h-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-1 sm:gap-10 w-full h-full">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex items-center justify-center">
             {dots[value].includes(i) && (
               <motion.div 
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                className="w-2 h-2 sm:w-10 sm:h-10 bg-emerald-900 rounded-full shadow-sm" 
+                className="w-2 h-2 sm:w-12 sm:h-12 bg-emerald-900 rounded-full shadow-sm" 
               />
             )}
           </div>
@@ -734,18 +734,18 @@ export default function App() {
           <p className="hidden sm:block text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
-        <div className="flex gap-2 sm:gap-4 items-center text-white sm:text-emerald-950">
+        <div className="flex gap-2 sm:gap-4 items-center">
           <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1 sm:gap-2 font-black text-[10px] sm:text-base">
-              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-300 sm:text-emerald-900" />
-              <span className="sm:text-emerald-950">{state.goldenCards} <span className="hidden sm:inline">Тукай картасы</span></span>
+            <div className="flex items-center gap-1 sm:gap-2 font-black text-[10px] sm:text-base text-white sm:text-emerald-900">
+              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-300 sm:text-emerald-700" />
+              <span>{state.goldenCards} <span className="hidden sm:inline">Тукай картасы</span></span>
             </div>
           </div>
           <button 
             onClick={resetGame}
-            className="p-1 sm:p-3 sm:hover:bg-emerald-950 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-900 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white text-white sm:text-emerald-950 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
+            className="p-1 sm:p-3 sm:hover:bg-emerald-900 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-900 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white text-white sm:text-emerald-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
           >
-            <RotateCcw className="w-2 h-2 sm:w-4 h-4" /> <span className="hidden sm:inline">Яңадан</span>
+            <RotateCcw className="w-2 h-2 sm:w-4 h-4" /> <span className="hidden sm:inline font-black">Яңадан</span>
           </button>
         </div>
       </header>
