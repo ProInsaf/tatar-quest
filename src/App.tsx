@@ -544,7 +544,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50 text-emerald-950 font-sans p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white">
+    <div className="h-[100dvh] lg:h-auto bg-emerald-50 text-emerald-950 font-sans p-2 sm:p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white overflow-hidden lg:overflow-visible">
 
       {/* ========= CHEAT MENU ========= */}
       <AnimatePresence>
@@ -698,36 +698,36 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <header className="max-w-5xl w-full mb-6 md:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-4 border-emerald-700 pb-4 relative gap-4 sm:gap-0">
+      <header className="max-w-5xl w-full mb-2 sm:mb-8 flex flex-row justify-between items-center sm:items-end border-b-2 sm:border-b-4 border-emerald-700 pb-2 sm:pb-4 relative gap-0">
         <TatarOrnament className="absolute -top-4 -left-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
         <TatarOrnament className="absolute -top-4 -right-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
         
         <div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
-          <p className="text-[10px] sm:text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
+          <h1 className="text-xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
+          <p className="hidden sm:block text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
-        <div className="flex gap-4 items-center w-full sm:w-auto justify-between sm:justify-end">
-          <div className="flex flex-col items-start sm:items-end">
-            <div className="flex items-center gap-2 text-emerald-800 font-black text-xs sm:text-base">
-              <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" />
-              <span>{state.goldenCards} Тукай картасы</span>
+        <div className="flex gap-2 sm:gap-4 items-center">
+          <div className="flex flex-col items-end">
+            <div className="flex items-center gap-1 sm:gap-2 text-emerald-800 font-black text-[10px] sm:text-base">
+              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-600" />
+              <span>{state.goldenCards} <span className="hidden sm:inline">Тукай картасы</span></span>
             </div>
           </div>
           <button 
             onClick={resetGame}
-            className="p-2 sm:p-3 hover:bg-emerald-800 hover:text-white transition-all border-4 border-emerald-800 rounded-none flex items-center gap-2 font-black uppercase text-[10px] sm:text-xs bg-white shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
+            className="p-1 sm:p-3 hover:bg-emerald-800 hover:text-white transition-all border-2 sm:border-4 border-emerald-800 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-white shadow-[2px_2px_0px_0px_rgba(6,78,59,1)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
           >
-            <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4" /> Яңадан
+            <RotateCcw className="w-2 h-2 sm:w-4 h-4" /> <span className="hidden sm:inline">Яңадан</span>
           </button>
         </div>
       </header>
 
       <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Board Section */}
-        <div className="lg:col-span-3 bg-white border-4 border-emerald-800 p-2 sm:p-8 shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative">
-          <div className="overflow-x-auto pb-6 scrollbar-hide flex justify-center">
-            <div className="relative min-w-[500px] sm:min-w-[600px] md:min-w-[700px] aspect-square w-full max-w-[800px]">
+        <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-1 sm:p-8 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative">
+          <div className="flex justify-center h-full items-center">
+            <div className="relative w-full aspect-square max-w-[min(100vw-1rem,70vh-10rem)] md:max-w-[800px]">
               <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
@@ -743,13 +743,13 @@ export default function App() {
                 <div 
                   key={cell.id}
                   style={{ gridRow: pos.row, gridColumn: pos.col }}
-                  className={`border-4 flex flex-col items-center justify-center relative transition-all duration-500 group cursor-help ${
+                  className={`border-[1px] sm:border-4 flex flex-col items-center justify-center relative transition-all duration-500 group cursor-help ${
                     state.playerPosition === idx 
-                      ? 'bg-emerald-900 border-emerald-950 z-20 shadow-[inset_0_0_20px_rgba(0,0,0,0.5)]' 
-                      : 'bg-white border-emerald-100 hover:border-emerald-800 hover:z-10 hover:shadow-xl'
+                      ? 'bg-emerald-900 border-emerald-950 z-20 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]' 
+                      : 'bg-white border-emerald-50 hover:border-emerald-800 hover:z-10 hover:shadow-xl'
                   }`}
                 >
-                  <div className={`text-[8px] font-mono absolute top-0.5 left-0.5 font-bold z-20 ${state.playerPosition === idx ? 'text-emerald-200' : 'text-emerald-400'}`}>
+                  <div className={`text-[5px] sm:text-[8px] font-mono absolute top-0 sm:top-0.5 left-0 sm:left-0.5 font-bold z-20 ${state.playerPosition === idx ? 'text-emerald-200' : 'text-emerald-400'}`}>
                     {idx.toString().padStart(2, '0')}
                   </div>
                   
@@ -760,12 +760,12 @@ export default function App() {
                   {state.playerPosition === idx ? (
                     <motion.div 
                       layoutId="player"
-                      className="w-10 h-10 sm:w-12 sm:h-12 bg-red-600 rounded-full border-4 border-white shadow-[0_0_20px_rgba(220,38,38,0.6)] flex items-center justify-center z-30 relative"
+                      className="w-5 h-5 sm:w-12 sm:h-12 bg-red-600 rounded-full border-2 sm:border-4 border-white shadow-[0_0_10px_rgba(220,38,38,0.6)] flex items-center justify-center z-30 relative"
                       transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     >
-                      <div className="absolute -inset-2 bg-red-500/40 rounded-full animate-ping opacity-75" />
-                      <User className="w-5 h-5 sm:w-6 sm:h-6 text-white relative z-10" />
-                      <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-emerald-900 text-white text-[8px] px-2 py-1 rounded-full font-black uppercase whitespace-nowrap shadow-lg border border-emerald-700">
+                      <div className="absolute -inset-1 sm:-inset-2 bg-red-500/40 rounded-full animate-ping opacity-75" />
+                      <User className="w-3 h-3 sm:w-6 sm:h-6 text-white relative z-10" />
+                      <div className="absolute -top-5 sm:-top-8 left-1/2 -translate-x-1/2 bg-emerald-900 text-white text-[5px] sm:text-[8px] px-1 sm:px-2 py-0.5 sm:py-1 rounded-full font-black uppercase whitespace-nowrap shadow-lg border border-emerald-700">
                         Сез монда
                       </div>
                     </motion.div>
@@ -787,13 +787,13 @@ export default function App() {
 
                   {/* Directional Indicator */}
                   {idx < BOARD_SIZE - 1 && (
-                    <div className={`absolute z-0 opacity-20 pointer-events-none ${
-                      idx < 10 ? 'right-[-8px] top-1/2 -translate-y-1/2' :
-                      idx < 20 ? 'bottom-[-8px] left-1/2 -translate-x-1/2 rotate-90' :
-                      idx < 30 ? 'left-[-8px] top-1/2 -translate-y-1/2 rotate-180' :
-                      'top-[-8px] left-1/2 -translate-x-1/2 -rotate-90'
+                    <div className={`absolute z-0 opacity-10 sm:opacity-20 pointer-events-none ${
+                      idx < 10 ? 'right-[-4px] sm:right-[-8px] top-1/2 -translate-y-1/2' :
+                      idx < 20 ? 'bottom-[-4px] sm:bottom-[-8px] left-1/2 -translate-x-1/2 rotate-90' :
+                      idx < 30 ? 'left-[-4px] sm:left-[-8px] top-1/2 -translate-y-1/2 rotate-180' :
+                      'top-[-4px] sm:top-[-8px] left-1/2 -translate-x-1/2 -rotate-90'
                     }`}>
-                      <ArrowRight className="w-4 h-4 text-emerald-900" />
+                      <ArrowRight className="w-2 h-2 sm:w-4 sm:h-4 text-emerald-900" />
                     </div>
                   )}
                 </div>
@@ -801,58 +801,55 @@ export default function App() {
             })}
 
             {/* Center Content */}
-            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-4 border-dashed border-emerald-100 group">
+            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-2 sm:border-4 border-dashed border-emerald-100 group">
               <img 
                 src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
                 alt="Тукай Юлы" 
                 className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700" 
               />
               <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
-              <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-20">
-                <div className="absolute top-0 left-0 w-20 h-20 border-t-8 border-l-8 border-emerald-900" />
-                <div className="absolute top-0 right-0 w-20 h-20 border-t-8 border-r-8 border-emerald-900" />
-                <div className="absolute bottom-0 left-0 w-20 h-20 border-b-8 border-l-8 border-emerald-900" />
             </div>
           </div>
         </div>
 
         {/* Controls & History */}
-        <div className="flex flex-col gap-6 lg:max-h-screen lg:sticky lg:top-8">
+        <div className="flex flex-col gap-2 sm:gap-6 lg:max-h-screen lg:sticky lg:top-8 min-h-0 flex-1 w-full max-w-5xl">
           {/* Dice Control */}
-          <div className="bg-white border-4 border-emerald-800 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex flex-col items-center gap-6 relative overflow-hidden">
-            <div className="absolute -top-4 -left-4 opacity-10 rotate-45">
+          <div className="bg-white border-2 sm:border-4 border-emerald-800 p-2 sm:p-8 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex flex-row sm:flex-col items-center justify-between sm:justify-start gap-3 sm:gap-6 relative overflow-hidden shrink-0">
+            <div className="absolute -top-4 -left-4 opacity-5 sm:opacity-10 rotate-45 hidden sm:block">
               <TatarOrnament className="w-16 h-16 text-emerald-900" />
             </div>
             
-            <div className="text-center">
-              <span className="text-sm font-black uppercase tracking-widest text-emerald-800">Шакмак ташлау</span>
+            <div className="flex items-center gap-2 sm:gap-3">
+              <MiniDice value={state.diceValue} />
+              <div className="sm:hidden flex flex-col items-start">
+                <span className="text-[7px] font-black uppercase text-emerald-800">Шакмак</span>
+                <span className="text-[12px] font-black text-emerald-900 leading-none">№{state.diceValue}</span>
+              </div>
             </div>
-            
-            <Dice value={state.diceValue} rolling={state.isRolling} />
 
             <button 
               onClick={rollDice}
               disabled={state.isRolling || state.isGameOver}
-              className={`group relative w-full py-5 font-black uppercase tracking-widest border-4 border-emerald-900 transition-all text-lg overflow-hidden ${
+              className={`group relative flex-1 sm:w-full py-3 sm:py-5 font-black uppercase tracking-widest border-2 sm:border-4 border-emerald-900 transition-all text-xs sm:text-lg overflow-hidden ${
                 state.isRolling || state.isGameOver 
                   ? 'bg-stone-200 text-stone-400 cursor-not-allowed' 
-                  : 'bg-red-600 text-white hover:bg-red-500 active:translate-y-1 active:shadow-none shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
+                  : 'bg-red-600 text-white hover:bg-red-500 active:translate-y-1 active:shadow-none shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] sm:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]'
               }`}
             >
               {!state.isRolling && !state.isGameOver && (
                 <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
               )}
-              <span className="relative z-10">{state.isGameOver ? 'Уен тәмам' : 'Алга!'}</span>
+              <span className="relative z-10">{state.isGameOver ? 'Тәмам' : 'Алга!'}</span>
             </button>
           </div>
 
           {/* History */}
-          <div className="bg-white border-4 border-emerald-800 p-4 sm:p-6 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col h-[400px] sm:h-[500px]">
-            <h3 className="text-xs font-black uppercase tracking-widest text-emerald-800 opacity-70 mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <History className="w-4 h-4" /> Уен тарихы
+          <div className="bg-white border-2 sm:border-4 border-emerald-800 p-2 sm:p-6 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col min-h-0">
+            <h3 className="text-[8px] sm:text-xs font-black uppercase tracking-widest text-emerald-800 opacity-70 mb-1 sm:mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-1 sm:gap-2">
+                <History className="w-3 h-3 sm:w-4 sm:h-4" /> Уен тарихы
               </div>
-              <span className="text-[10px] font-mono opacity-50">Соңгы вакыйгалар</span>
             </h3>
             
             <div className="flex-1 overflow-y-scroll pr-2 custom-scrollbar space-y-3 scroll-smooth">
@@ -902,7 +899,7 @@ export default function App() {
               </AnimatePresence>
             </div>
 
-            <div className="mt-6 pt-6 border-t-4 border-emerald-50">
+            <div className="mt-2 sm:mt-6 pt-2 sm:pt-6 border-t-2 sm:border-t-4 border-emerald-50 hidden md:block">
               <h4 className="text-[11px] font-black uppercase tracking-widest mb-3 text-emerald-900 flex items-center gap-2">
                 <HelpCircle className="w-3 h-3" /> Ничек уйнарга?
               </h4>
