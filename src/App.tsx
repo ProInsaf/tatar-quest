@@ -126,7 +126,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
       transition={{ duration: 0.7, ease: 'easeInOut' }}
       className="fixed inset-0 z-[200] flex flex-col items-center justify-center overflow-hidden"
       style={{
-        background: 'radial-gradient(ellipse at 60% 40%, #064e3b 0%, #022c22 55%, #000 100%)'
+        background: 'radial-gradient(ellipse at 50% 50%, #064e3b 0%, #022c22 60%, #000 100%)'
       }}
     >
       {/* Animated floating ornaments */}
@@ -162,25 +162,25 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
       <motion.div
         animate={{ scale: [1, 1.15, 1], opacity: [0.08, 0.18, 0.08] }}
         transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
-        className="absolute w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] rounded-full border-2 border-emerald-400"
+        className="absolute w-[250px] h-[250px] sm:w-[600px] sm:h-[600px] rounded-full border-2 border-emerald-400"
       />
       <motion.div
         animate={{ scale: [1.1, 1, 1.1], opacity: [0.04, 0.12, 0.04] }}
         transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
-        className="absolute w-[400px] h-[400px] sm:w-[800px] sm:h-[800px] rounded-full border border-yellow-400"
+        className="absolute w-[350px] h-[350px] sm:w-[800px] sm:h-[800px] rounded-full border border-yellow-400"
       />
 
       {/* Content */}
       <div className="relative z-10 flex flex-col items-center text-center px-6">
         {/* Tukay portrait */}
         <motion.div
-          initial={{ y: -40, opacity: 0 }}
+          initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2, type: 'spring', damping: 14 }}
-          className="mb-6 relative"
+          className="mb-4 sm:mb-6 relative"
         >
-          <div className="absolute -inset-3 bg-yellow-400/20 rounded-full blur-2xl animate-pulse" />
-          <div className="w-28 h-28 rounded-full border-4 border-yellow-400 overflow-hidden shadow-[0_0_40px_rgba(250,204,21,0.5)] relative">
+          <div className="absolute -inset-2 sm:-inset-3 bg-yellow-400/20 rounded-full blur-xl sm:blur-2xl animate-pulse" />
+          <div className="w-20 h-20 sm:w-28 sm:h-28 rounded-full border-2 sm:border-4 border-yellow-400 overflow-hidden shadow-[0_0_20px_rgba(250,204,21,0.5)] sm:shadow-[0_0_40px_rgba(250,204,21,0.5)] relative">
             <img
               src="https://avatars.mds.yandex.net/i?id=84c7c28b2d73e2684e67d3867411fe209c0d8277-8310551-images-thumbs&n=13"
               alt="Габдулла Тукай"
@@ -191,31 +191,30 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 20, ease: 'linear' }}
-            className="absolute -inset-4 rounded-full border-2 border-dashed border-emerald-500/30"
+            className="absolute -inset-3 sm:-inset-4 rounded-full border border-dashed border-emerald-500/50"
           />
         </motion.div>
 
         {/* Title */}
         <motion.div
-          initial={{ y: 30, opacity: 0 }}
+          initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.4, type: 'spring', damping: 12 }}
         >
           <h1
-            className="text-4xl sm:text-7xl font-black uppercase tracking-tighter leading-none mb-1"
+            className="text-4xl sm:text-7xl font-black uppercase tracking-tighter leading-none mb-0.5 sm:mb-1"
             style={{
               background: 'linear-gradient(135deg, #fde68a 0%, #f59e0b 40%, #ffffff 60%, #6ee7b7 100%)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
-              filter: 'drop-shadow(0 0 30px rgba(250,204,21,0.4))'
+              filter: 'drop-shadow(0 0 15px rgba(250,204,21,0.4))'
             }}
           >
             ТУКАЙ
           </h1>
           <h2
-            className="text-xl sm:text-4xl font-black uppercase tracking-[0.3em] text-emerald-300 mt-2"
-            style={{ letterSpacing: '0.35em' }}
+            className="text-[16px] sm:text-4xl font-black uppercase tracking-[0.2em] sm:tracking-[0.3em] text-emerald-300 mt-1 sm:mt-2"
           >
             МОНОПОЛИЯСЕ
           </h2>
@@ -226,7 +225,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="mt-4 text-emerald-400 font-mono text-sm uppercase tracking-widest"
+          className="mt-3 sm:mt-4 text-emerald-400 font-mono text-[10px] sm:text-sm uppercase tracking-widest px-4"
         >
           Тукай дөньясы буйлап сәяхәт
         </motion.p>
@@ -259,14 +258,14 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           </AnimatePresence>
 
           <motion.button
-            whileHover={{ scale: 1.06 }}
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={handleStart}
             disabled={launched}
-            className="relative px-10 sm:px-20 py-4 sm:py-6 font-black uppercase tracking-[0.25em] text-xl sm:text-3xl text-emerald-950 border-4 border-yellow-300 overflow-hidden"
+            className="relative px-8 sm:px-20 py-4 sm:py-6 font-black uppercase tracking-[0.15em] sm:tracking-[0.25em] text-[16px] sm:text-3xl text-emerald-950 border-2 sm:border-4 border-yellow-300 overflow-hidden rounded-md sm:rounded-none"
             style={{
               background: 'linear-gradient(135deg, #fde68a, #f59e0b)',
-              boxShadow: '8px 8px 0 rgba(0,0,0,0.5), 0 0 40px rgba(250,204,21,0.3)'
+              boxShadow: '4px 4px 0 rgba(0,0,0,0.5), 0 0 20px rgba(250,204,21,0.3)'
             }}
           >
             <motion.div
@@ -544,7 +543,7 @@ export default function App() {
   };
 
   return (
-    <div className="h-[100dvh] lg:h-auto bg-emerald-50 text-emerald-950 font-sans p-2 sm:p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white overflow-hidden lg:overflow-visible">
+    <div className="min-h-[100dvh] bg-emerald-50 text-emerald-950 font-sans p-1.5 sm:p-4 md:p-8 flex flex-col items-center tatar-pattern selection:bg-emerald-800 selection:text-white pb-20 sm:pb-8">
 
       {/* ========= CHEAT MENU ========= */}
       <AnimatePresence>
@@ -723,11 +722,11 @@ export default function App() {
         </div>
       </header>
 
-      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-8 lg:items-start lg:h-[calc(100vh-140px)]">
         {/* Board Section */}
-        <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-1 sm:p-8 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative">
-          <div className="flex justify-center h-full items-center">
-            <div className="relative w-full aspect-square max-w-[min(100vw-1rem,70vh-10rem)] md:max-w-[800px]">
+        <div className="lg:col-span-3 bg-white border-2 sm:border-4 border-emerald-800 p-0.5 sm:p-8 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative w-full lg:h-full flex items-center justify-center">
+          <div className="flex justify-center h-full items-center w-full">
+            <div className="relative w-full max-w-[100vw] sm:max-w-none aspect-[1/1] sm:aspect-square md:max-w-[70vh] lg:max-w-none lg:h-full lg:aspect-square sm:m-0 mx-auto">
               <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
               <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
@@ -813,7 +812,7 @@ export default function App() {
         </div>
 
         {/* Controls & History */}
-        <div className="flex flex-col gap-2 sm:gap-6 lg:max-h-screen lg:sticky lg:top-8 min-h-0 flex-1 w-full max-w-5xl">
+        <div className="flex flex-col gap-2 sm:gap-6 lg:h-full lg:sticky lg:top-8 w-full max-w-5xl justify-between">
           {/* Dice Control */}
           <div className="bg-white border-2 sm:border-4 border-emerald-800 p-2 sm:p-8 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex flex-row sm:flex-col items-center justify-between sm:justify-start gap-3 sm:gap-6 relative overflow-hidden shrink-0">
             <div className="absolute -top-4 -left-4 opacity-5 sm:opacity-10 rotate-45 hidden sm:block">
@@ -845,7 +844,7 @@ export default function App() {
           </div>
 
           {/* History */}
-          <div className="bg-white border-2 sm:border-4 border-emerald-800 p-2 sm:p-6 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col min-h-0">
+          <div className="bg-white border-2 sm:border-4 border-emerald-800 p-2 sm:p-6 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] sm:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col min-h-[300px] lg:min-h-0">
             <h3 className="text-[8px] sm:text-xs font-black uppercase tracking-widest text-emerald-800 opacity-70 mb-1 sm:mb-4 flex items-center justify-between">
               <div className="flex items-center gap-1 sm:gap-2">
                 <History className="w-3 h-3 sm:w-4 sm:h-4" /> Уен тарихы
