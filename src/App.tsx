@@ -799,7 +799,7 @@ export default function App() {
             })}
 
             {/* Center Content */}
-            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-4 border-dashed border-emerald-100 m-4 group">
+            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-4 border-dashed border-emerald-100 group">
               <img 
                 src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
                 alt="Тукай Юлы" 
