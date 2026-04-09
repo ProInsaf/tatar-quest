@@ -799,13 +799,14 @@ export default function App() {
             })}
 
             {/* Center Content */}
-            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center p-8 text-center bg-emerald-50/20 relative overflow-hidden border-4 border-dashed border-emerald-100 m-4 group">
+            <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-4 border-dashed border-emerald-100 m-4 group">
               <img 
                 src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
                 alt="Тукай Юлы" 
-                className="w-full max-w-[280px] h-auto object-cover rounded-2xl shadow-[0_0_30px_rgba(6,78,59,0.2)] border-[6px] border-emerald-100 z-10 group-hover:scale-105 transition-transform duration-500 group-hover:border-emerald-300" 
+                className="absolute inset-0 w-full h-full object-cover z-0 group-hover:scale-105 transition-transform duration-700" 
               />
-              <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5">
+              <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+              <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-20 z-20">
                 <div className="absolute top-0 left-0 w-20 h-20 border-t-8 border-l-8 border-emerald-900" />
                 <div className="absolute top-0 right-0 w-20 h-20 border-t-8 border-r-8 border-emerald-900" />
                 <div className="absolute bottom-0 left-0 w-20 h-20 border-b-8 border-l-8 border-emerald-900" />
