@@ -810,6 +810,8 @@ export default function App() {
             </div>
           </div>
         </div>
+        </div>
+        </div>
 
         {/* Controls & History */}
         <div className="flex flex-col gap-2 sm:gap-6 lg:h-full lg:sticky lg:top-8 w-full max-w-5xl justify-between">
