@@ -117,12 +117,12 @@ const MiniDice = ({ value }: { value: number }) => {
   ];
 
   return (
-    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-white border-2 border-emerald-800 rounded flex items-center justify-center p-1">
-      <div className="grid grid-cols-3 grid-rows-3 gap-0.5 w-full h-full">
+    <div className="w-8 h-8 sm:w-24 sm:h-24 bg-white border-2 border-emerald-800 rounded sm:rounded-xl flex items-center justify-center p-1 sm:p-4">
+      <div className="grid grid-cols-3 grid-rows-3 gap-0.5 sm:gap-2 w-full h-full">
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className="flex items-center justify-center">
             {dots[value].includes(i) && (
-              <div className="w-1 h-1 bg-emerald-900 rounded-full" />
+              <div className="w-1 h-1 sm:w-4 sm:h-4 bg-emerald-900 rounded-full" />
             )}
           </div>
         ))}
