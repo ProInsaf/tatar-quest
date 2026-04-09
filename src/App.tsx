@@ -202,7 +202,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           transition={{ delay: 0.4, type: 'spring', damping: 12 }}
         >
           <h1
-            className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-none mb-1"
+            className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none mb-1"
             style={{
               background: 'linear-gradient(135deg, #fde68a 0%, #f59e0b 40%, #ffffff 60%, #6ee7b7 100%)',
               WebkitBackgroundClip: 'text',
@@ -211,13 +211,13 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
               filter: 'drop-shadow(0 0 30px rgba(250,204,21,0.4))'
             }}
           >
-            TUQAY
+            ТУКАЙ
           </h1>
           <h2
-            className="text-3xl md:text-5xl font-black uppercase tracking-[0.3em] text-emerald-300"
+            className="text-2xl md:text-4xl font-black uppercase tracking-[0.3em] text-emerald-300 mt-2"
             style={{ letterSpacing: '0.35em' }}
           >
-            QUEST
+            МОНОПОЛИЯСЕ
           </h2>
         </motion.div>
 
@@ -228,7 +228,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           transition={{ delay: 0.7 }}
           className="mt-4 text-emerald-400 font-mono text-sm uppercase tracking-widest"
         >
-          Тукай дөньясы буйлап • 40 клеток
+          Тукай дөньясы буйлап сәяхәт
         </motion.p>
 
         {/* Start button */}
@@ -299,6 +299,7 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
 
 export default function App() {
   const [showWelcome, setShowWelcome] = useState(true);
+  const [showStartMessage, setShowStartMessage] = useState(false);
 
   const [state, setState] = useState<GameState>({
     playerPosition: 0,
@@ -641,7 +642,42 @@ export default function App() {
         )}
       </AnimatePresence>
       <AnimatePresence>
-        {showWelcome && <WelcomeScreen onStart={() => setShowWelcome(false)} />}
+        {showWelcome && <WelcomeScreen onStart={() => {
+          setShowWelcome(false);
+          setShowStartMessage(true);
+        }} />}
+      </AnimatePresence>
+      <AnimatePresence>
+        {showStartMessage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          >
+            <motion.div
+              initial={{ scale: 0.8, y: 50, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              exit={{ scale: 0.9, y: -20, opacity: 0 }}
+              className="bg-white border-4 border-emerald-800 p-8 rounded-2xl max-w-lg w-full text-center shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
+            >
+              <TatarOrnament className="absolute -top-10 -left-10 w-32 h-32 text-emerald-50 opacity-50" />
+              <TatarOrnament className="absolute -bottom-10 -right-10 w-32 h-32 text-emerald-50 opacity-50" />
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black uppercase tracking-tighter text-emerald-900 mb-6" style={{ letterSpacing: '0.05em' }}>Хөрмәтле уенчы!</h3>
+                <p className="text-lg text-emerald-800 mb-8 font-medium">
+                  Син "Тукай монополиясе"нең башлангыч ноктасында басып торасың. Алда сине мажаралы сәяхәт көтә. Уңышлар сиңа!
+                </p>
+                <button
+                  onClick={() => setShowStartMessage(false)}
+                  className="w-full py-4 bg-yellow-400 hover:bg-yellow-300 text-emerald-950 font-black uppercase tracking-widest border-2 border-emerald-900 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none transition-all text-xl"
+                >
+                  Дәвам итү
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
       </AnimatePresence>
       <AnimatePresence>
         {state.isRolling && (
@@ -667,8 +703,8 @@ export default function App() {
         <TatarOrnament className="absolute -top-4 -right-4 w-12 h-12 text-emerald-800 opacity-20" />
         
         <div>
-          <h1 className="text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Tuqay Quest</h1>
-          <p className="text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП • 40 КЛЕТОК</p>
+          <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
+          <p className="text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
         <div className="flex gap-4 items-center">
@@ -764,7 +800,11 @@ export default function App() {
 
             {/* Center Content */}
             <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center p-8 text-center bg-emerald-50/20 relative overflow-hidden border-4 border-dashed border-emerald-100 m-4 group">
-              <h2 className="text-6xl font-black uppercase tracking-tighter text-emerald-900 opacity-20 group-hover:opacity-30 transition-opacity">Тукай Юлы</h2>
+              <img 
+                src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
+                alt="Тукай Юлы" 
+                className="w-full max-w-[280px] h-auto object-cover rounded-2xl shadow-[0_0_30px_rgba(6,78,59,0.2)] border-[6px] border-emerald-100 z-10 group-hover:scale-105 transition-transform duration-500 group-hover:border-emerald-300" 
+              />
               <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-5">
                 <div className="absolute top-0 left-0 w-20 h-20 border-t-8 border-l-8 border-emerald-900" />
                 <div className="absolute top-0 right-0 w-20 h-20 border-t-8 border-r-8 border-emerald-900" />
@@ -1086,7 +1126,7 @@ export default function App() {
                     className="absolute inset-0 w-full h-full bg-gradient-to-br from-amber-600 via-yellow-400 to-yellow-200 rounded-2xl border-4 border-yellow-100 shadow-2xl flex flex-col items-center justify-center p-5 text-emerald-900"
                   >
                     <TatarOrnament className="w-20 h-20 text-emerald-900/20" variant={2} />
-                    <span className="font-black text-sm uppercase tracking-widest mt-2 opacity-70">TUQAY QUEST</span>
+                    <span className="font-black text-sm uppercase tracking-widest mt-2 opacity-70">ТУКАЙ МОНОПОЛИЯСЕ</span>
                   </div>
                 </motion.div>
                 <motion.div
