@@ -106,7 +106,7 @@ const Dice = ({ value, rolling }: { value: number; rolling: boolean }) => {
 };
 
 const TATAR_ROLL_LABEL = (n: number) => {
-  return `${n} клетка алга`;
+  return `${n} шакмак алга`;
 };
 
 const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
@@ -386,7 +386,7 @@ export default function App() {
           } else {
             const steps = Math.abs(heroData.move);
             const direction = heroData.move < 0 ? '\u0430\u0440\u0442\u043a\u0430' : '\u0430\u043b\u0433\u0430';
-            setTimeout(() => addToHistory(`${steps} \u043a\u043b\u0435\u0442\u043a\u0430\u0433\u0430 ${direction}`, type), 0);
+            setTimeout(() => addToHistory(`${steps} \u0448\u0430\u043a\u043c\u0430\u043a\u043a\u0430 ${direction}`, type), 0);
             return { ...prev, playerPosition: newPos };
           }
         });
@@ -454,7 +454,7 @@ export default function App() {
           });
           setState(prev => ({ ...prev, isSecondQuestion: true }));
         } else {
-          addToHistory(`Яңадан хата! 2 клетка артка күчү.`, 'error');
+          addToHistory(`Яңадан хата! 2 шакмак артка күчү.`, 'error');
           setState(prev => ({
             ...prev,
             isAnswering: false,
@@ -698,38 +698,40 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      <header className="max-w-5xl w-full mb-8 flex justify-between items-end border-b-4 border-emerald-700 pb-4 relative">
-        <TatarOrnament className="absolute -top-4 -left-4 w-12 h-12 text-emerald-800 opacity-20" />
-        <TatarOrnament className="absolute -top-4 -right-4 w-12 h-12 text-emerald-800 opacity-20" />
+      <header className="max-w-5xl w-full mb-6 md:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end border-b-4 border-emerald-700 pb-4 relative gap-4 sm:gap-0">
+        <TatarOrnament className="absolute -top-4 -left-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
+        <TatarOrnament className="absolute -top-4 -right-4 w-12 h-12 text-emerald-800 opacity-20 hidden md:block" />
         
         <div>
-          <h1 className="text-4xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
-          <p className="text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-black uppercase tracking-tighter leading-none text-emerald-800 drop-shadow-sm">Тукай монополиясе</h1>
+          <p className="text-[10px] sm:text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
-        <div className="flex gap-4 items-center">
-          <div className="flex flex-col items-end">
-            <div className="flex items-center gap-2 text-emerald-800 font-black">
-              <CreditCard className="w-5 h-5 text-yellow-600" />
+        <div className="flex gap-4 items-center w-full sm:w-auto justify-between sm:justify-end">
+          <div className="flex flex-col items-start sm:items-end">
+            <div className="flex items-center gap-2 text-emerald-800 font-black text-xs sm:text-base">
+              <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-600" />
               <span>{state.goldenCards} Тукай картасы</span>
             </div>
           </div>
           <button 
             onClick={resetGame}
-            className="p-3 hover:bg-emerald-800 hover:text-white transition-all border-4 border-emerald-800 rounded-none flex items-center gap-2 font-black uppercase text-xs bg-white shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
+            className="p-2 sm:p-3 hover:bg-emerald-800 hover:text-white transition-all border-4 border-emerald-800 rounded-none flex items-center gap-2 font-black uppercase text-[10px] sm:text-xs bg-white shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
           >
-            <RotateCcw className="w-4 h-4" /> Яңадан
+            <RotateCcw className="w-3 h-3 sm:w-4 sm:h-4" /> Яңадан
           </button>
         </div>
       </header>
 
-      <main className="max-w-7xl w-full grid grid-cols-1 xl:grid-cols-4 gap-8">
+      <main className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Board Section */}
-        <div className="xl:col-span-3 bg-white border-4 border-emerald-800 p-4 sm:p-8 shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-auto relative">
-          <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
-          <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
-          <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
-          <TatarOrnament className="absolute bottom-2 right-2 w-8 h-8 text-emerald-100" />
+        <div className="lg:col-span-3 bg-white border-4 border-emerald-800 p-2 sm:p-8 shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] overflow-hidden relative">
+          <div className="overflow-x-auto pb-6 scrollbar-hide flex justify-center">
+            <div className="relative min-w-[500px] sm:min-w-[600px] md:min-w-[700px] aspect-square w-full max-w-[800px]">
+              <TatarOrnament className="absolute top-2 left-2 w-8 h-8 text-emerald-100" />
+              <TatarOrnament className="absolute top-2 right-2 w-8 h-8 text-emerald-100" />
+              <TatarOrnament className="absolute bottom-2 left-2 w-8 h-8 text-emerald-100" />
+              <TatarOrnament className="absolute bottom-2 right-2 w-8 h-8 text-emerald-100" />
 
           <div 
             className="grid grid-cols-11 grid-rows-11 gap-1 min-w-[600px] aspect-square"
@@ -810,16 +812,14 @@ export default function App() {
                 <div className="absolute top-0 left-0 w-20 h-20 border-t-8 border-l-8 border-emerald-900" />
                 <div className="absolute top-0 right-0 w-20 h-20 border-t-8 border-r-8 border-emerald-900" />
                 <div className="absolute bottom-0 left-0 w-20 h-20 border-b-8 border-l-8 border-emerald-900" />
-                <div className="absolute bottom-0 right-0 w-20 h-20 border-b-8 border-r-8 border-emerald-900" />
-              </div>
             </div>
           </div>
         </div>
 
         {/* Controls & History */}
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 lg:max-h-screen lg:sticky lg:top-8">
           {/* Dice Control */}
-          <div className="bg-white border-4 border-emerald-800 p-8 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex flex-col items-center gap-6 relative overflow-hidden">
+          <div className="bg-white border-4 border-emerald-800 p-4 sm:p-8 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex flex-col items-center gap-6 relative overflow-hidden">
             <div className="absolute -top-4 -left-4 opacity-10 rotate-45">
               <TatarOrnament className="w-16 h-16 text-emerald-900" />
             </div>
@@ -847,7 +847,7 @@ export default function App() {
           </div>
 
           {/* History */}
-          <div className="bg-white border-4 border-emerald-800 p-6 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col h-[500px]">
+          <div className="bg-white border-4 border-emerald-800 p-4 sm:p-6 shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] flex-1 relative flex flex-col h-[400px] sm:h-[500px]">
             <h3 className="text-xs font-black uppercase tracking-widest text-emerald-800 opacity-70 mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <History className="w-4 h-4" /> Уен тарихы
@@ -937,7 +937,7 @@ export default function App() {
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: -20 }}
-              className="bg-white border-8 border-emerald-800 p-8 md:p-12 max-w-2xl w-full shadow-[32px_32px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
+              className="bg-white border-4 md:border-8 border-emerald-800 p-6 md:p-12 max-w-2xl w-full shadow-[16px_16px_0px_0px_rgba(6,78,59,1)] md:shadow-[32px_32px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden max-h-[90vh] overflow-y-auto"
             >
               <div className="absolute -top-20 -right-20 w-64 h-64 bg-emerald-50 rounded-full opacity-50 blur-3xl" />
               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-red-50 rounded-full opacity-30 blur-3xl" />
@@ -963,9 +963,9 @@ export default function App() {
 
                 <div className="text-center md:text-left flex-1">
                   <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-[0.2em] mb-3 border-2 border-emerald-200">
-                    {state.isAnswering ? "Белем тикшерү" : "Клетка вакыйгасы"}
+                    {state.isAnswering ? "Белем тикшерү" : "ЖӘЗА"}
                   </div>
-                  <h2 className="text-4xl md:text-5xl font-black uppercase tracking-tighter text-emerald-900 leading-none mb-4">
+                  <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-emerald-900 leading-none mb-4">
                     {state.isAnswering ? (state.isSecondQuestion ? "Өстәмә сорау!" : "Белем сынавы") : state.currentEvent.title}
                   </h2>
                   <div className="flex items-center justify-center md:justify-start gap-4 text-emerald-600/60 font-mono text-xs font-bold">
@@ -984,7 +984,7 @@ export default function App() {
                 <motion.p 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-2xl md:text-3xl leading-relaxed text-emerald-950 font-black text-center md:text-left relative z-10"
+                  className="text-lg md:text-3xl leading-relaxed text-emerald-950 font-black text-center md:text-left relative z-10"
                 >
                   {state.isSecondQuestion ? backupQuestion?.description : state.currentEvent.description}
                 </motion.p>
@@ -1020,20 +1020,20 @@ export default function App() {
                         key={idx}
                         onClick={() => handleAnswer(idx)}
                         disabled={isAnswerChecked}
-                        className={`w-full py-5 px-8 border-4 ${borderColor} ${bgColor} ${textColor} font-black uppercase tracking-widest transition-all text-lg text-left flex items-center justify-between group/btn shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] ${!isAnswerChecked ? 'hover:shadow-none hover:bg-emerald-800 hover:text-white' : ''}`}
+                        className={`w-full py-3 md:py-5 px-4 md:px-8 border-4 ${borderColor} ${bgColor} ${textColor} font-black uppercase tracking-widest transition-all text-xs md:text-lg text-left flex items-center justify-between group/btn shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] md:shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] ${!isAnswerChecked ? 'hover:shadow-none hover:bg-emerald-800 hover:text-white' : ''}`}
                       >
-                        <div className="flex items-center gap-6">
-                          <span className={`w-10 h-10 ${isAnswerChecked ? 'bg-white/20' : 'bg-emerald-100 group-hover/btn:bg-emerald-700'} flex items-center justify-center rounded-full border-2 border-current text-sm transition-colors font-mono`}>
+                        <div className="flex items-center gap-3 md:gap-6">
+                          <span className={`w-6 h-6 md:w-10 md:h-10 ${isAnswerChecked ? 'bg-white/20' : 'bg-emerald-100 group-hover/btn:bg-emerald-700'} flex items-center justify-center rounded-full border-2 border-current text-[10px] md:text-sm transition-colors font-mono flex-shrink-0`}>
                             {String.fromCharCode(65 + idx)}
                           </span>
-                          {opt}
+                          <span className="leading-tight">{opt}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          {isAnswerChecked && isCorrect && <CheckCircle2 className="w-6 h-6" />}
-                          {isAnswerChecked && isSelected && !isCorrect && <XCircle className="w-6 h-6" />}
+                          {isAnswerChecked && isCorrect && <CheckCircle2 className="w-4 h-4 md:w-6 md:h-6" />}
+                          {isAnswerChecked && isSelected && !isCorrect && <XCircle className="w-4 h-4 md:w-6 md:h-6" />}
                           {!isAnswerChecked && (
-                            <div className="bg-emerald-100 group-hover/btn:bg-emerald-700 p-2 rounded-full transition-colors">
-                              <ArrowRight className="w-5 h-5 opacity-0 group-hover/btn:opacity-100 transition-all -translate-x-4 group-hover/btn:translate-x-0" />
+                            <div className="bg-emerald-100 group-hover/btn:bg-emerald-700 p-1 md:p-2 rounded-full transition-colors hidden sm:block">
+                              <ArrowRight className="w-4 h-4 md:w-5 md:h-5 opacity-0 group-hover/btn:opacity-100 transition-all -translate-x-4 group-hover/btn:translate-x-0" />
                             </div>
                           )}
                         </div>
@@ -1079,7 +1079,7 @@ export default function App() {
                 <Trophy className="w-48 h-48 mb-8 text-yellow-400 drop-shadow-[0_0_50px_rgba(250,204,21,0.8)]" />
               </motion.div>
               
-              <h1 className="text-8xl font-black uppercase tracking-tighter mb-6 drop-shadow-lg">Җиңү!</h1>
+              <h1 className="text-5xl md:text-8xl font-black uppercase tracking-tighter mb-6 drop-shadow-lg">Җиңү!</h1>
               
               <div className="relative mb-12 group" style={{ perspective: '1000px' }}>
                 <div className="absolute -inset-6 bg-yellow-400 rounded-3xl blur-3xl opacity-30 group-hover:opacity-50 transition-opacity animate-pulse" />
@@ -1139,13 +1139,13 @@ export default function App() {
                 </motion.div>
               </div>
 
-              <p className="text-2xl font-bold mb-12 max-w-2xl leading-relaxed text-emerald-50">
+              <p className="text-lg md:text-2xl font-bold mb-8 md:mb-12 max-w-2xl leading-relaxed text-emerald-50 px-4">
                 Сез Тукай дөньясын яхшы беләсез! Сезгә Тукай Картасы бирелә!
               </p>
 
               <button 
                 onClick={resetGame}
-                className="group relative px-20 py-8 bg-white text-emerald-900 font-black uppercase tracking-widest hover:bg-emerald-50 transition-all shadow-[16px_16px_0px_0px_rgba(0,0,0,0.3)] text-3xl active:translate-y-2 active:shadow-none overflow-hidden"
+                className="group relative px-10 md:px-20 py-6 md:py-8 bg-white text-emerald-900 font-black uppercase tracking-widest hover:bg-emerald-50 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,0.3)] md:shadow-[16px_16px_0px_0px_rgba(0,0,0,0.3)] text-xl md:text-3xl active:translate-y-2 active:shadow-none overflow-hidden"
               >
                 <div className="absolute inset-0 bg-emerald-800 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />
                 <span className="relative z-10 group-hover:text-white transition-colors">Яңадан башлау</span>
