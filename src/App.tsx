@@ -851,8 +851,10 @@ export default function App() {
             
             <div className="flex items-center gap-2 sm:gap-3">
               <MiniDice value={state.diceValue} />
-              <div className="sm:hidden flex items-center justify-center ml-1">
-                <span className="text-[24px] font-black text-emerald-950 leading-none">{state.diceValue}</span>
+              <div className="sm:hidden flex flex-col items-center justify-center ml-2 uppercase">
+                <span className="text-[20px] font-black text-emerald-950 leading-none">{state.diceValue}</span>
+                <span className="text-[7px] font-bold text-emerald-800 tracking-tighter leading-none mt-0.5">Шакмак</span>
+                <span className="text-[7px] font-bold text-emerald-900 tracking-tighter leading-none">Алга</span>
               </div>
             </div>
 
