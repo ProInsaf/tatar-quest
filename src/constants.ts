@@ -78,7 +78,7 @@ export const generateBoard = (): Cell[] => {
 
     // Ensure at least 1 empty space between any two traps
     let isTooClose = false;
-    for (let neighbor of [-1, 0, 1]) {
+    for (let neighbor of [-2, -1, 0, 1, 2]) {
       if (heroPositions.has(p + neighbor)) {
         isTooClose = true;
         break;
