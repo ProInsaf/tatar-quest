@@ -993,7 +993,7 @@ const [showWelcome, setShowWelcome] = useState(true);
               initial={{ scale: 0.9, opacity: 0, y: 20 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
               exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="bg-white border-4 sm:border-8 border-emerald-800 p-6 sm:p-10 max-w-xl w-full shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
+              className="bg-white border-4 sm:border-8 border-emerald-800 p-6 sm:p-10 max-w-xl w-full shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] relative max-h-[90vh] overflow-y-auto"
             >
               <div className="absolute top-0 right-0 p-4">
                 <button onClick={() => setShowProfile(false)} className="text-emerald-800 hover:text-emerald-600">
