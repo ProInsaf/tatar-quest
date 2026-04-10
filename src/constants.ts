@@ -36,7 +36,7 @@ export const TUQAY_QUESTIONS = [
   { q: "Тукай дуслары белән бергә чыгарган, эчендә бик күп кызыклы рәсемнәр һәм көлкеле шигырьләр булган журнал ничек атала?", a: ["«Ялт-Йолт»", "«Казан»", "«Мәгариф»"], correct: 0 },
   { q: "Шагыйрьнең кайсы әсәрен туган тел гимны дип атыйлар?", a: ["«Туган тел»", "«Пар ат»", "«Шүрәле»"], correct: 0 },
   { q: "\"Пар ат\" әсәрендә Казан шәһәре нинди образ буларак сурәтләнә?", a: ["Нурлы Казан", "Караңгы шәһәр", "Ят җир"], correct: 0 },
-  { q: "Габдулла Тукайның әнисенең исеме?", a: ["Мәмдүдә", "Бибисара", "Гайшә"], correct: 0 },
+  { q: "Габдулла Тукайның әнисенең исеме?", a: ["Мәмдүдә", "Бибимәмдүдә", "Гайшә"], correct: 0 },
   { q: "Габдулланың әтисе Мөхәммәтгариф Кушлавыч авылында кем булып эшләгән?", a: ["Мулла", "Укытучы", "Крестьян"], correct: 0 },
   { q: "Габдулла Тукайга балачакта ничек иркәләп эндәшкәннәр?", a: ["Апуш", "Габдуллаҗан", "Тукай"], correct: 0 },
 ];
@@ -70,14 +70,25 @@ const shuffleAnswers = (options: string[], correctIndex: number): { options: str
 export const generateBoard = (): Cell[] => {
   const board: Cell[] = [];
 
-  // Fixed positions for heroes and questions to ensure exact counts
-  const heroPositions = new Set<number>();
-  while (heroPositions.size < 10) {
-    const p = Math.floor(Math.random() * (BOARD_SIZE - 2)) + 1;
-    // Ensure no two traps are adjacent
-    if (!heroPositions.has(p - 1) && !heroPositions.has(p + 1)) {
+  let heroPositions = new Set<number>();
+  let attempts = 0;
+  
+  while (heroPositions.size < 10 && attempts < 1000) {
+    const p = Math.floor(Math.random() * (BOARD_SIZE - 4)) + 2; // Keep away from start/finish
+    
+    // Ensure at least 1 empty space between any two traps
+    let isTooClose = false;
+    for (let neighbor of [-1, 0, 1]) {
+      if (heroPositions.has(p + neighbor)) {
+        isTooClose = true;
+        break;
+      }
+    }
+    
+    if (!isTooClose) {
       heroPositions.add(p);
     }
+    attempts++;
   }
 
   const questionPositions = new Set<number>();

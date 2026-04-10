@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'motion/react';
-import { RotateCcw, Trophy, AlertTriangle, HelpCircle, Gift, Shield, ChevronRight, Sparkles, CreditCard, History, User, BookOpen, ArrowRight, CheckCircle2, XCircle } from 'lucide-react';
+import { RotateCcw, Trophy, AlertTriangle, HelpCircle, Gift, Shield, ChevronRight, Sparkles, CreditCard, History, User, BookOpen, ArrowRight, CheckCircle2, XCircle, BarChart2 } from 'lucide-react';
 import { generateBoard, BOARD_SIZE, TUQAY_HEROES, BACKUP_QUESTIONS } from './constants';
-import { Cell, GameState } from './types';
+import { Cell, GameState, UserStats } from './types';
 
 const board = generateBoard();
 
@@ -323,8 +323,28 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
 };
 
 export default function App() {
-  const [showWelcome, setShowWelcome] = useState(true);
+const [showWelcome, setShowWelcome] = useState(true);
   const [showStartMessage, setShowStartMessage] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
+
+  const [userStats, setUserStats] = useState<UserStats>(() => {
+    const saved = localStorage.getItem('tuqay_user_stats');
+    if (saved) {
+      try { return JSON.parse(saved); } catch (e) {}
+    }
+    return { correctAnswers: 0, wrongAnswers: 0, playTimeSeconds: 0, gamesWon: 0, gamesStarted: 0, goldenCards: 0 };
+  });
+
+  useEffect(() => {
+    localStorage.setItem('tuqay_user_stats', JSON.stringify(userStats));
+  }, [userStats]);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setUserStats(prev => ({ ...prev, playTimeSeconds: prev.playTimeSeconds + 1 }));
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const [state, setState] = useState<GameState>({
     playerPosition: 0,
@@ -339,7 +359,7 @@ export default function App() {
     currentEvent: null,
     isRolling: false,
     diceValue: 1,
-    goldenCards: 0,
+    
     isAnswering: false,
     isSecondQuestion: false,
   });
@@ -394,7 +414,7 @@ export default function App() {
         type = 'error';
 
         if (cell.title === 'Шүрәле') {
-          setState(prev => ({ ...prev, goldenCards: Math.max(0, prev.goldenCards - 1) }));
+          setUserStats(prev => ({ ...prev, goldenCards: Math.max(0, prev.goldenCards - 1) }));
         }
 
         setState(prev => {
@@ -402,11 +422,12 @@ export default function App() {
           
           if (newPos === BOARD_SIZE - 1) {
             setTimeout(() => addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success'), 0);
+          setUserStats(stats => ({ ...stats, goldenCards: stats.goldenCards + 1, gamesWon: stats.gamesWon + 1 }));
             return {
               ...prev,
               playerPosition: newPos,
               isGameOver: true,
-              goldenCards: prev.goldenCards + 1
+              
             };
           } else {
             const steps = Math.abs(heroData.move);
@@ -424,11 +445,12 @@ export default function App() {
       const newPos = prev.playerPosition;
       if (newPos === BOARD_SIZE - 1 && !prev.isGameOver) {
         setTimeout(() => addToHistory("Котлыйбыз! Сез финишка җиттегез һәм Алтын карта алдыгыз!", 'success'), 0);
+          setUserStats(stats => ({ ...stats, goldenCards: stats.goldenCards + 1, gamesWon: stats.gamesWon + 1 }));
         return {
           ...prev,
           playerPosition: newPos,
           isGameOver: true,
-          goldenCards: prev.goldenCards + 1
+          
         };
       }
       return prev;
@@ -449,18 +471,21 @@ export default function App() {
       setIsAnswerChecked(false);
       
       if (isCorrect) {
+        setUserStats(prev => ({ ...prev, correctAnswers: prev.correctAnswers + 1 }));
         addToHistory("Дөрес җавап! Алга барыгыз.", 'success');
         setState(prev => ({ ...prev, isAnswering: false, isSecondQuestion: false }));
         setShowModal(false);
       } else {
-        if (state.goldenCards > 0) {
+        setUserStats(prev => ({ ...prev, wrongAnswers: prev.wrongAnswers + 1 }));
+        if (userStats.goldenCards > 0) {
           // Алтын карта бар — бер карта алына, өстәмә сорау бирелми
           addToHistory(`1 Тукай картасы алынды`, 'warning');
+          setUserStats(s => ({ ...s, goldenCards: Math.max(0, s.goldenCards - 1) }));
           setState(prev => ({
             ...prev,
             isAnswering: false,
             isSecondQuestion: false,
-            goldenCards: prev.goldenCards - 1,
+            
           }));
           setShowModal(false);
         } else if (!state.isSecondQuestion) {
@@ -532,7 +557,7 @@ export default function App() {
       currentEvent: null,
       isRolling: false,
       diceValue: 1,
-      goldenCards: prev.goldenCards,
+      
       isAnswering: false,
       isSecondQuestion: false,
     }));
@@ -613,7 +638,7 @@ export default function App() {
                 whileHover={{ scale: 1.02, backgroundColor: '#14532d' }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => {
-                  setState(prev => ({ ...prev, goldenCards: prev.goldenCards + 1 }));
+                  setState(prev => ({ ...prev,  }));
                   addToHistory('[CHEAT] +1 Тукай Картасы Үұстәленде', 'success');
                 }}
                 className="w-full py-3 px-4 font-mono text-sm font-bold text-green-300 border border-green-800 text-left transition-colors flex items-center gap-3"
@@ -621,7 +646,7 @@ export default function App() {
               >
                 <CreditCard className="w-4 h-4 text-yellow-400 flex-shrink-0" />
                 +1 Тукай Картасы
-                <span className="ml-auto text-green-700 text-[10px]">Сан: {state.goldenCards}</span>
+                <span className="ml-auto text-green-700 text-[10px]">Сан: {userStats.goldenCards}</span>
               </motion.button>
 
               {/* Add 5 cards */}
@@ -637,7 +662,7 @@ export default function App() {
               >
                 <Sparkles className="w-4 h-4 text-yellow-400 flex-shrink-0" />
                 +5 Тукай Картасы
-                <span className="ml-auto text-green-700 text-[10px]">Сан: {state.goldenCards}</span>
+                <span className="ml-auto text-green-700 text-[10px]">Сан: {userStats.goldenCards}</span>
               </motion.button>
 
               {/* Teleport to finish */}
@@ -650,7 +675,7 @@ export default function App() {
                     ...prev,
                     playerPosition: finishPos,
                     isGameOver: true,
-                    goldenCards: prev.goldenCards + 1
+                    
                   }));
                   addToHistory('[CHEAT] Финишка телепортация!', 'success');
                   setShowCheat(false);
@@ -671,6 +696,7 @@ export default function App() {
         {showWelcome && <WelcomeScreen onStart={() => {
           setShowWelcome(false);
           setShowStartMessage(true);
+          setUserStats(prev => ({ ...prev, gamesStarted: prev.gamesStarted + 1 }));
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }} />}
       </AnimatePresence>
@@ -734,15 +760,17 @@ export default function App() {
           <p className="hidden sm:block text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
         </div>
         
-        <div className="flex gap-2 sm:gap-4 items-center">
-          <div className="flex flex-col items-end">
-            <div className="flex items-center gap-1 sm:gap-2 font-black text-[10px] sm:text-base text-white sm:text-emerald-900">
-              <CreditCard className="w-3 h-3 sm:w-5 sm:h-5 text-yellow-300 sm:text-emerald-700" />
-              <span>{state.goldenCards} <span className="hidden sm:inline">Тукай картасы</span></span>
-            </div>
-          </div>
-          <button 
-            onClick={resetGame}
+        
+          <div className="flex gap-2 sm:gap-4 items-center">
+            <button 
+              onClick={() => setShowProfile(true)}
+              className="p-1 sm:p-3 sm:hover:bg-emerald-900 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-900 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white text-white sm:text-emerald-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
+            >
+              <BarChart2 className="w-4 h-4" /> <span className="hidden sm:inline font-black">Профиль</span>
+            </button>
+            <button 
+              onClick={resetGame}
+
             className="p-1 sm:p-3 sm:hover:bg-emerald-900 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-900 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white text-white sm:text-emerald-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
           >
             <RotateCcw className="w-2 h-2 sm:w-4 h-4" /> <span className="hidden sm:inline font-black">Яңадан</span>
@@ -940,7 +968,7 @@ export default function App() {
                 </div>
                 <div className="flex items-center gap-2 p-2 bg-red-50 border-2 border-red-100 rounded-none">
                   <AlertTriangle className="w-3 h-3 text-red-500" />
-                  <span className="text-[9px] font-black uppercase text-red-800">Җазалар</span>
+                  <span className="text-[9px] font-black uppercase text-red-800">Җәзалар</span>
                 </div>
                 <div className="flex items-center gap-2 p-2 bg-green-50 border-2 border-green-100 rounded-none">
                   <Gift className="w-3 h-3 text-green-500" />
@@ -955,6 +983,82 @@ export default function App() {
           </div>
         </div>
       </main>
+
+      
+      {/* Profile Modal */}
+      <AnimatePresence>
+        {showProfile && (
+          <div className="fixed inset-0 z-[400] flex flex-col items-center justify-center p-4 sm:p-8 bg-emerald-950/90 backdrop-blur-md">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-white border-4 sm:border-8 border-emerald-800 p-6 sm:p-10 max-w-xl w-full shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] relative overflow-hidden"
+            >
+              <div className="absolute top-0 right-0 p-4">
+                <button onClick={() => setShowProfile(false)} className="text-emerald-800 hover:text-emerald-600">
+                  <XCircle className="w-8 h-8" />
+                </button>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-black uppercase tracking-tighter text-emerald-900 mb-8 flex items-center gap-3 border-b-4 border-emerald-100 pb-4">
+                <User className="w-10 h-10 text-emerald-600" /> Шәхси кабинет
+              </h2>
+
+              <div className="grid grid-cols-2 gap-4 sm:gap-6">
+                <div className="bg-emerald-50 p-4 border-2 border-emerald-200 shadow-inner flex flex-col items-center text-center">
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Тукай Карталары</span>
+                  <div className="text-4xl font-black text-yellow-600 flex items-center gap-2">
+                    <CreditCard className="w-6 h-6" /> {userStats.goldenCards}
+                  </div>
+                </div>
+                <div className="bg-emerald-50 p-4 border-2 border-emerald-200 shadow-inner flex flex-col items-center text-center">
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Уйналган вакыт</span>
+                  <div className="text-2xl sm:text-4xl font-black text-emerald-800">
+                    {Math.floor(userStats.playTimeSeconds / 60)} мин
+                  </div>
+                </div>
+                <div className="bg-green-50 p-4 border-2 border-green-200 shadow-inner flex flex-col items-center text-center">
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Дөрес җаваплар</span>
+                  <div className="text-4xl font-black text-green-600 flex items-center gap-2">
+                    <CheckCircle2 className="w-6 h-6" /> {userStats.correctAnswers}
+                  </div>
+                </div>
+                <div className="bg-red-50 p-4 border-2 border-red-200 shadow-inner flex flex-col items-center text-center">
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Хаталар</span>
+                  <div className="text-4xl font-black text-red-600 flex items-center gap-2">
+                    <XCircle className="w-6 h-6" /> {userStats.wrongAnswers}
+                  </div>
+                </div>
+                <div className="col-span-2 bg-blue-50 p-4 border-2 border-blue-200 shadow-inner flex flex-col items-center text-center">
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Җаваплар төгәллеге</span>
+                  <div className="text-4xl font-black text-blue-600">
+                    {userStats.correctAnswers + userStats.wrongAnswers > 0 
+                      ? Math.round((userStats.correctAnswers / (userStats.correctAnswers + userStats.wrongAnswers)) * 100) 
+                      : 0}%
+                  </div>
+                  <div className="w-full bg-blue-200 h-2 mt-2 rounded-full overflow-hidden">
+                    <div 
+                      className="bg-blue-600 h-full transition-all duration-1000" 
+                      style={{ width: `${userStats.correctAnswers + userStats.wrongAnswers > 0 ? (userStats.correctAnswers / (userStats.correctAnswers + userStats.wrongAnswers)) * 100 : 0}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-8 pt-6 border-t-4 border-emerald-100 grid grid-cols-2 gap-4">
+                 <div>
+                   <span className="text-[10px] xl:text-xs font-black uppercase text-emerald-500 block mb-1">Уйналган уеннар</span>
+                   <span className="text-2xl font-black text-emerald-900">{userStats.gamesStarted}</span>
+                 </div>
+                 <div>
+                   <span className="text-[10px] xl:text-xs font-black uppercase text-emerald-500 block mb-1">Җиңүләр</span>
+                   <span className="text-2xl font-black text-yellow-600 flex items-center gap-2">{userStats.gamesWon} <Trophy className="w-4 h-4" /></span>
+                 </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Event Modal */}
       <AnimatePresence>
@@ -990,7 +1094,7 @@ export default function App() {
 
                 <div className="text-center md:text-left flex-1">
                   <div className="inline-block px-3 py-1 bg-emerald-100 text-emerald-800 text-[10px] font-black uppercase tracking-[0.2em] mb-3 border-2 border-emerald-200">
-                    {state.isAnswering ? "Белем тикшерү" : "ЖӘЗА"}
+                    {state.isAnswering ? "Белем тикшерү" : "Җәза"}
                   </div>
                   <h2 className="text-2xl md:text-5xl font-black uppercase tracking-tighter text-emerald-900 leading-none mb-4">
                     {state.isAnswering ? (state.isSecondQuestion ? "Өстәмә сорау!" : "Белем сынавы") : state.currentEvent.title}

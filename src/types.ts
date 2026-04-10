@@ -23,3 +23,12 @@ export interface GameState {
   isAnswering: boolean;
   isSecondQuestion: boolean;
 }
+
+export interface UserStats {
+  correctAnswers: number;
+  wrongAnswers: number;
+  playTimeSeconds: number;
+  gamesWon: number;
+  gamesStarted: number;
+  goldenCards: number;
+}
