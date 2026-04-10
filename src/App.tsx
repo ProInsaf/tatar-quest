@@ -638,8 +638,8 @@ const [showWelcome, setShowWelcome] = useState(true);
                 whileHover={{ scale: 1.02, backgroundColor: '#14532d' }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => {
-                  setState(prev => ({ ...prev,  }));
-                  addToHistory('[CHEAT] +1 Тукай Картасы Үұстәленде', 'success');
+                  setUserStats(prev => ({ ...prev, goldenCards: prev.goldenCards + 1 }));
+                  addToHistory('[CHEAT] +1 Тукай Картасы Өстәлде', 'success');
                 }}
                 className="w-full py-3 px-4 font-mono text-sm font-bold text-green-300 border border-green-800 text-left transition-colors flex items-center gap-3"
                 style={{ background: '#0d1a0d' }}
@@ -654,8 +654,8 @@ const [showWelcome, setShowWelcome] = useState(true);
                 whileHover={{ scale: 1.02, backgroundColor: '#14532d' }}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => {
-                  setState(prev => ({ ...prev, goldenCards: prev.goldenCards + 5 }));
-                  addToHistory('[CHEAT] +5 Тукай Картасы Үңәйтелде', 'success');
+                  setUserStats(prev => ({ ...prev, goldenCards: prev.goldenCards + 5 }));
+                  addToHistory('[CHEAT] +5 Тукай Картасы Өстәлде', 'success');
                 }}
                 className="w-full py-3 px-4 font-mono text-sm font-bold text-green-300 border border-green-800 text-left transition-colors flex items-center gap-3"
                 style={{ background: '#0d1a0d' }}
@@ -671,11 +671,11 @@ const [showWelcome, setShowWelcome] = useState(true);
                 whileTap={{ scale: 0.97 }}
                 onClick={() => {
                   const finishPos = BOARD_SIZE - 1;
+                  setUserStats(prev => ({ ...prev, goldenCards: prev.goldenCards + 1, gamesWon: prev.gamesWon + 1 }));
                   setState(prev => ({
                     ...prev,
                     playerPosition: finishPos,
                     isGameOver: true,
-                    
                   }));
                   addToHistory('[CHEAT] Финишка телепортация!', 'success');
                   setShowCheat(false);

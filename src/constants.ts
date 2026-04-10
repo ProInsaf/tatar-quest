@@ -20,7 +20,7 @@ export const TUQAY_QUESTIONS = [
   { q: "Тукай ничәнче елда туган?", a: ["1886", "1890", "1875"], correct: 0 },
   { q: "Тукай соңгы елларын кайда уздырган?", a: ["Казан", "Мәскәү", "Уфа"], correct: 0 },
   { q: "Татар теленең гимны булган шигыре?", a: ["Туган тел", "Бәйрәм", "Кыш"], correct: 0 },
-  { q: "Кырлайдагы асрауга алган кешенең исеме?", a: ["Сәгди", "Әхмәт", "Гали"], correct: 0 },
+  { q: "Кырлайдагы асрауга алган кешенең исеме?", a: ["Cәгъди", "Әхмәт", "Гали"], correct: 0 },
   { q: "Тукай ничә яшендә вафат булган?", a: ["27", "33", "45"], correct: 0 },
   { q: "Су анасы турындагы әкият кайда бара?", a: ["Кырлай", "Казан", "Арча"], correct: 0 },
   { q: "Тукайның беренче шигыре кайда басылган?", a: ["Уральск", "Казан", "Петербург"], correct: 0 },
@@ -72,10 +72,10 @@ export const generateBoard = (): Cell[] => {
 
   let heroPositions = new Set<number>();
   let attempts = 0;
-  
+
   while (heroPositions.size < 10 && attempts < 1000) {
     const p = Math.floor(Math.random() * (BOARD_SIZE - 4)) + 2; // Keep away from start/finish
-    
+
     // Ensure at least 1 empty space between any two traps
     let isTooClose = false;
     for (let neighbor of [-1, 0, 1]) {
@@ -84,7 +84,7 @@ export const generateBoard = (): Cell[] => {
         break;
       }
     }
-    
+
     if (!isTooClose) {
       heroPositions.add(p);
     }

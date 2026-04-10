@@ -19,7 +19,6 @@ export interface GameState {
   currentEvent: Cell | null;
   isRolling: boolean;
   diceValue: number;
-  goldenCards: number;
   isAnswering: boolean;
   isSecondQuestion: boolean;
 }
