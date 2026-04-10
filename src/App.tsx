@@ -1047,7 +1047,7 @@ const [showWelcome, setShowWelcome] = useState(true);
 
               <div className="mt-8 pt-6 border-t-4 border-emerald-100 grid grid-cols-2 gap-4">
                  <div>
-                   <span className="text-[10px] xl:text-xs font-black uppercase text-emerald-500 block mb-1">Уйналган уеннар</span>
+                   <span className="text-[10px] xl:text-xs font-black uppercase text-emerald-500 block mb-1">Уйнаган уеннар</span>
                    <span className="text-2xl font-black text-emerald-900">{userStats.gamesStarted}</span>
                  </div>
                  <div>
