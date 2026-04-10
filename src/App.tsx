@@ -1012,7 +1012,7 @@ const [showWelcome, setShowWelcome] = useState(true);
                   </div>
                 </div>
                 <div className="bg-emerald-50 p-4 border-2 border-emerald-200 shadow-inner flex flex-col items-center text-center">
-                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Уйналган вакыт</span>
+                  <span className="text-[10px] sm:text-xs font-black uppercase text-emerald-600 mb-2">Уйнаган вакыт</span>
                   <div className="text-2xl sm:text-4xl font-black text-emerald-800">
                     {Math.floor(userStats.playTimeSeconds / 60)} мин
                   </div>
