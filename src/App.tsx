@@ -311,11 +311,16 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-10 flex items-center gap-4 text-emerald-600/40"
+          className="mt-10 flex flex-col items-center gap-2 text-emerald-600/40"
         >
-          <TatarOrnament className="w-6 h-6" />
-          <span className="font-mono text-xs tracking-widest uppercase">Г. Тукай • 1886 – 1913</span>
-          <TatarOrnament className="w-6 h-6" />
+          <div className="flex items-center gap-4">
+            <TatarOrnament className="w-6 h-6" />
+            <span className="font-mono text-xs tracking-widest uppercase">Г. Тукай • 1886 – 1913</span>
+            <TatarOrnament className="w-6 h-6" />
+          </div>
+          <span className="font-mono text-[10px] tracking-[0.2em] uppercase font-bold opacity-60">
+            Редактор – Резедә Шакирова
+          </span>
         </motion.div>
       </div>
     </motion.div>
@@ -1285,6 +1290,16 @@ const [showWelcome, setShowWelcome] = useState(true);
           </motion.div>
         )}
       </AnimatePresence>
+
+      <footer className="w-full mt-auto py-6 sm:py-8 flex flex-col items-center gap-2 border-t border-emerald-800/10 relative z-10">
+        <div className="flex items-center gap-3 text-emerald-800/30">
+          <TatarOrnament className="w-3 h-3" />
+          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] uppercase font-black text-center">
+            Редактор – Резедә Шакирова
+          </span>
+          <TatarOrnament className="w-3 h-3" />
+        </div>
+      </footer>
     </div>
   );
 }
