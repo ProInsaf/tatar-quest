@@ -765,9 +765,9 @@ const [showWelcome, setShowWelcome] = useState(true);
         <div className="flex flex-col">
           <h1 className="text-xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-white sm:text-emerald-900 drop-shadow-sm">Тукай монополиясе</h1>
           <div className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-4 mt-1">
-            <p className="text-[10px] sm:text-sm font-mono font-bold text-red-100 sm:text-red-600 uppercase tracking-wider">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
-            <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-emerald-800/20" />
-            <p className="text-[9px] sm:text-xs font-mono font-black text-emerald-100/60 sm:text-emerald-900/40 uppercase tracking-[0.2em]">
+            <p className="hidden sm:block text-sm font-mono font-bold text-red-600 uppercase tracking-wider">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
+            <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-emerald-800/40" />
+            <p className="text-[10px] sm:text-xs font-mono font-black text-emerald-100 sm:text-emerald-950/80 uppercase tracking-[0.2em]">
               Редактор – Резедә Шакирова
             </p>
           </div>
