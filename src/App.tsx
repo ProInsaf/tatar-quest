@@ -311,14 +311,16 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-12 flex flex-col items-center gap-3 text-emerald-400"
+          className="mt-12 flex flex-col items-center gap-2 group cursor-default"
         >
-          <div className="flex items-center gap-4">
-            <TatarOrnament className="w-6 h-6 opacity-40" />
-            <span className="font-mono text-xs tracking-widest uppercase font-bold text-emerald-100">Г. Тукай • 1886 – 1913</span>
-            <TatarOrnament className="w-6 h-6 opacity-40" />
+          <div className="flex items-center gap-3 text-emerald-600/30 group-hover:text-emerald-500/50 transition-colors duration-500">
+            <div className="h-px w-8 bg-current" />
+            <TatarOrnament className="w-4 h-4" />
+            <span className="font-mono text-[10px] tracking-[0.2em] uppercase font-bold text-emerald-100/60 transition-colors">Г. Тукай • 1886 – 1913</span>
+            <TatarOrnament className="w-4 h-4" />
+            <div className="h-px w-8 bg-current" />
           </div>
-          <span className="font-mono text-[10px] sm:text-xs tracking-[0.4em] uppercase font-black text-emerald-300/90 border-t border-emerald-400/20 pt-2 px-4 text-center">
+          <span className="font-mono text-[9px] tracking-[0.3em] uppercase font-black text-emerald-400/80">
             Редактор – Резедә Шакирова
           </span>
         </motion.div>
@@ -762,7 +764,13 @@ const [showWelcome, setShowWelcome] = useState(true);
         
         <div className="flex flex-col">
           <h1 className="text-xl sm:text-5xl font-black uppercase tracking-tighter leading-none text-white sm:text-emerald-900 drop-shadow-sm">Тукай монополиясе</h1>
-          <p className="hidden sm:block text-sm font-mono font-bold text-red-600 mt-1">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
+          <div className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-4 mt-1">
+            <p className="text-[10px] sm:text-sm font-mono font-bold text-red-100 sm:text-red-600 uppercase tracking-wider">ТУКАЙ ДӨНЬЯСЫ БУЙЛАП СӘЯХӘТ</p>
+            <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-emerald-800/20" />
+            <p className="text-[9px] sm:text-xs font-mono font-black text-emerald-100/60 sm:text-emerald-900/40 uppercase tracking-[0.2em]">
+              Редактор – Резедә Шакирова
+            </p>
+          </div>
         </div>
         
         
@@ -1290,19 +1298,6 @@ const [showWelcome, setShowWelcome] = useState(true);
           </motion.div>
         )}
       </AnimatePresence>
-
-      <footer className="w-full mt-8 py-8 flex flex-col items-center gap-3 border-t border-emerald-900/10 relative z-10">
-        <div className="flex items-center gap-4 text-emerald-900/70">
-          <TatarOrnament className="w-4 h-4" />
-          <div className="flex flex-col items-center">
-            <span className="font-mono text-[10px] sm:text-xs tracking-[0.4em] uppercase font-black text-center">
-              Редактор – Резедә Шакирова
-            </span>
-            <div className="w-16 h-0.5 bg-emerald-900/20 mt-1.5 rounded-full" />
-          </div>
-          <TatarOrnament className="w-4 h-4" />
-        </div>
-      </footer>
     </div>
   );
 }
