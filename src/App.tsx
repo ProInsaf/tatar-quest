@@ -311,14 +311,14 @@ const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.2 }}
-          className="mt-10 flex flex-col items-center gap-2 text-emerald-600/40"
+          className="mt-12 flex flex-col items-center gap-3 text-emerald-400"
         >
           <div className="flex items-center gap-4">
-            <TatarOrnament className="w-6 h-6" />
-            <span className="font-mono text-xs tracking-widest uppercase">Г. Тукай • 1886 – 1913</span>
-            <TatarOrnament className="w-6 h-6" />
+            <TatarOrnament className="w-6 h-6 opacity-40" />
+            <span className="font-mono text-xs tracking-widest uppercase font-bold text-emerald-100">Г. Тукай • 1886 – 1913</span>
+            <TatarOrnament className="w-6 h-6 opacity-40" />
           </div>
-          <span className="font-mono text-[10px] tracking-[0.2em] uppercase font-bold opacity-60">
+          <span className="font-mono text-[10px] sm:text-xs tracking-[0.4em] uppercase font-black text-emerald-300/90 border-t border-emerald-400/20 pt-2 px-4 text-center">
             Редактор – Резедә Шакирова
           </span>
         </motion.div>
@@ -600,7 +600,7 @@ const [showWelcome, setShowWelcome] = useState(true);
   };
 
   return (
-    <div className="min-h-[100dvh] text-emerald-950 font-sans p-1 sm:p-4 md:p-8 flex flex-col items-center pb-12 sm:pb-8 overflow-x-hidden relative bg-emerald-900 sm:bg-emerald-50/95 tatar-pattern bg-fixed">
+    <div className="min-h-[100dvh] text-emerald-950 font-sans p-1 sm:p-4 md:p-8 flex flex-col items-center pb-4 sm:pb-6 overflow-x-hidden relative bg-emerald-900 sm:bg-emerald-50/95 tatar-pattern bg-fixed">
 
       {/* ========= CHEAT MENU ========= */}
       <AnimatePresence>
@@ -1291,13 +1291,16 @@ const [showWelcome, setShowWelcome] = useState(true);
         )}
       </AnimatePresence>
 
-      <footer className="w-full mt-auto py-6 sm:py-8 flex flex-col items-center gap-2 border-t border-emerald-800/10 relative z-10">
-        <div className="flex items-center gap-3 text-emerald-800/30">
-          <TatarOrnament className="w-3 h-3" />
-          <span className="font-mono text-[9px] sm:text-[10px] tracking-[0.3em] uppercase font-black text-center">
-            Редактор – Резедә Шакирова
-          </span>
-          <TatarOrnament className="w-3 h-3" />
+      <footer className="w-full mt-8 py-8 flex flex-col items-center gap-3 border-t border-emerald-900/10 relative z-10">
+        <div className="flex items-center gap-4 text-emerald-900/70">
+          <TatarOrnament className="w-4 h-4" />
+          <div className="flex flex-col items-center">
+            <span className="font-mono text-[10px] sm:text-xs tracking-[0.4em] uppercase font-black text-center">
+              Редактор – Резедә Шакирова
+            </span>
+            <div className="w-16 h-0.5 bg-emerald-900/20 mt-1.5 rounded-full" />
+          </div>
+          <TatarOrnament className="w-4 h-4" />
         </div>
       </footer>
     </div>
