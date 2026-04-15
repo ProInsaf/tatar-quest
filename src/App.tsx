@@ -135,7 +135,7 @@ const TATAR_ROLL_LABEL = (n: number) => {
   return `${n} шакмак алга`;
 };
 
-const playSound = (type: 'click' | 'dice') => {
+const playSound = (type: 'click' | 'dice' | 'win') => {
   const audio = new Audio(`/audio/${type}.mp3`);
   audio.play().catch(e => console.log('Audio play blocked:', e));
 };
@@ -376,6 +376,12 @@ const [showWelcome, setShowWelcome] = useState(true);
     isAnswering: false,
     isSecondQuestion: false,
   });
+
+  useEffect(() => {
+    if (state.isGameOver) {
+      playSound('win');
+    }
+  }, [state.isGameOver]);
 
   const [feedbackVideo, setFeedbackVideo] = useState<'correct' | 'wrong' | null>(null);
 
