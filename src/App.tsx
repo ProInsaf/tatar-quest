@@ -135,10 +135,16 @@ const TATAR_ROLL_LABEL = (n: number) => {
   return `${n} шакмак алга`;
 };
 
+const playSound = (type: 'click' | 'dice') => {
+  const audio = new Audio(`/audio/${type}.mp3`);
+  audio.play().catch(e => console.log('Audio play blocked:', e));
+};
+
 const WelcomeScreen = ({ onStart }: { onStart: () => void }) => {
   const [launched, setLaunched] = useState(false);
 
   const handleStart = () => {
+    playSound('click');
     setLaunched(true);
     setTimeout(onStart, 900);
   };
@@ -467,6 +473,7 @@ const [showWelcome, setShowWelcome] = useState(true);
   }, []);
 
   const handleAnswer = (index: number) => {
+    playSound('click');
     if (isAnswerChecked) return;
     
     const currentQ = state.isSecondQuestion ? backupQuestion : state.currentEvent;
@@ -533,6 +540,7 @@ const [showWelcome, setShowWelcome] = useState(true);
 
   const rollDice = () => {
     if (state.isRolling || state.isGameOver) return;
+    playSound('dice');
 
     setState(prev => ({ ...prev, isRolling: true }));
 
@@ -561,6 +569,7 @@ const [showWelcome, setShowWelcome] = useState(true);
   };
 
   const resetGame = () => {
+    playSound('click');
     setState(prev => ({
       playerPosition: 0,
       isGameOver: false,
@@ -576,6 +585,7 @@ const [showWelcome, setShowWelcome] = useState(true);
   };
 
   const closeModal = () => {
+    playSound('click');
     if (state.currentEvent) {
       if (state.currentEvent.type === 'question') {
         setState(prev => ({ ...prev, isAnswering: true }));
@@ -733,7 +743,10 @@ const [showWelcome, setShowWelcome] = useState(true);
                   Син "Тукай монополиясе"нең башлангыч ноктасында басып торасың. Алда сине мажаралы сәяхәт көтә. Уңышлар сиңа!
                 </p>
                 <button
-                  onClick={() => setShowStartMessage(false)}
+                  onClick={() => {
+                    playSound('click');
+                    setShowStartMessage(false);
+                  }}
                   className="w-full py-4 bg-yellow-400 hover:bg-yellow-300 text-emerald-950 font-black uppercase tracking-widest border-2 border-emerald-900 shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none transition-all text-xl"
                 >
                   Дәвам итү
@@ -780,7 +793,10 @@ const [showWelcome, setShowWelcome] = useState(true);
         
           <div className="flex gap-2 sm:gap-4 items-center">
             <button 
-              onClick={() => setShowProfile(true)}
+              onClick={() => {
+                playSound('click');
+                setShowProfile(true);
+              }}
               className="p-1 sm:p-3 sm:hover:bg-emerald-900 sm:hover:text-white transition-all border-2 sm:border-4 border-white sm:border-emerald-900 rounded-none flex items-center gap-1 sm:gap-2 font-black uppercase text-[8px] sm:text-xs bg-emerald-700 sm:bg-white text-white sm:text-emerald-900 shadow-[2px_2px_0px_0px_rgba(0,0,0,0.3)] sm:shadow-[4px_4px_0px_0px_rgba(6,78,59,1)] active:translate-y-1 active:shadow-none"
             >
               <BarChart2 className="w-4 h-4" /> <span className="hidden sm:inline font-black">Профиль</span>
@@ -1042,7 +1058,10 @@ const [showWelcome, setShowWelcome] = useState(true);
               className="bg-white border-4 sm:border-8 border-emerald-800 p-6 sm:p-10 max-w-xl w-full shadow-[8px_8px_0px_0px_rgba(6,78,59,1)] relative max-h-[90vh] overflow-y-auto"
             >
               <div className="absolute top-0 right-0 p-4">
-                <button onClick={() => setShowProfile(false)} className="text-emerald-800 hover:text-emerald-600">
+                <button onClick={() => {
+                  playSound('click');
+                  setShowProfile(false);
+                }} className="text-emerald-800 hover:text-emerald-600">
                   <XCircle className="w-8 h-8" />
                 </button>
               </div>
