@@ -371,6 +371,8 @@ const [showWelcome, setShowWelcome] = useState(true);
     isSecondQuestion: false,
   });
 
+  const [feedbackVideo, setFeedbackVideo] = useState<'correct' | 'wrong' | null>(null);
+
   const [showModal, setShowModal] = useState(false);
   const [backupQuestion, setBackupQuestion] = useState<any>(null);
   const [selectedAnswerIdx, setSelectedAnswerIdx] = useState<number | null>(null);
@@ -480,6 +482,7 @@ const [showWelcome, setShowWelcome] = useState(true);
       if (isCorrect) {
         setUserStats(prev => ({ ...prev, correctAnswers: prev.correctAnswers + 1 }));
         addToHistory("Дөрес җавап! Алга барыгыз.", 'success');
+        setFeedbackVideo('correct');
         setState(prev => ({ ...prev, isAnswering: false, isSecondQuestion: false }));
         setShowModal(false);
       } else {
@@ -488,11 +491,11 @@ const [showWelcome, setShowWelcome] = useState(true);
           // Алтын карта бар — бер карта алына, өстәмә сорау бирелми
           addToHistory(`1 Тукай картасы алынды`, 'warning');
           setUserStats(s => ({ ...s, goldenCards: Math.max(0, s.goldenCards - 1) }));
+          setFeedbackVideo('wrong');
           setState(prev => ({
             ...prev,
             isAnswering: false,
             isSecondQuestion: false,
-            
           }));
           setShowModal(false);
         } else if (!state.isSecondQuestion) {
@@ -515,6 +518,7 @@ const [showWelcome, setShowWelcome] = useState(true);
           setState(prev => ({ ...prev, isSecondQuestion: true }));
         } else {
           addToHistory(`Яңадан хата! 2 шакмак артка күчү.`, 'error');
+          setFeedbackVideo('wrong');
           setState(prev => ({
             ...prev,
             isAnswering: false,
@@ -870,12 +874,41 @@ const [showWelcome, setShowWelcome] = useState(true);
 
             {/* Center Content */}
             <div className="col-start-2 col-end-11 row-start-2 row-end-11 flex flex-col items-center justify-center relative overflow-hidden border-2 sm:border-4 border-dashed border-emerald-100 group">
-              <img 
-                src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
-                alt="Тукай Юлы" 
-                className="absolute inset-0 w-full h-full object-cover z-0 transition-transform duration-700" 
-              />
-              <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+              <AnimatePresence mode="wait">
+                {feedbackVideo ? (
+                  <motion.div
+                    key="video"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 w-full h-full z-20 bg-black"
+                  >
+                    <video
+                      src={feedbackVideo === 'correct' ? '/videos/correct.mp4' : '/videos/wrong.mp4'}
+                      autoPlay
+                      onEnded={() => setFeedbackVideo(null)}
+                      className="w-full h-full object-cover"
+                    />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="image"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute inset-0 w-full h-full"
+                  >
+                    <img 
+                      src="https://i.ibb.co/1J9q3chY/photo-2026-04-09-06-52-28.jpg" 
+                      alt="Тукай Юлы" 
+                      className="w-full h-full object-cover z-0 transition-transform duration-700" 
+                    />
+                    <div className="absolute inset-0 bg-emerald-950/10 group-hover:bg-transparent transition-colors duration-500 z-10" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
