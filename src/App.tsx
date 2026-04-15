@@ -882,7 +882,7 @@ const [showWelcome, setShowWelcome] = useState(true);
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: 0.5 }}
-                    className="absolute inset-0 w-full h-full z-20 bg-black"
+                    className="absolute inset-0 w-full h-full z-20 bg-white"
                   >
                     <video
                       src={feedbackVideo === 'correct' ? '/videos/correct.mp4' : '/videos/wrong.mp4'}
